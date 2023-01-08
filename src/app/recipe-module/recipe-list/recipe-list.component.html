@@ -1,0 +1,8 @@
+<h1>Recipes</h1>
+
+<app-card
+  >*ngFor="let recipe of recipes" [name]="recipe.name"
+  [imageUrl]="recipe.imageUrl" [description]="recipe.description"
+  [ingredients]="recipe.ingredients"
+  [instructions]="recipe.instructions"</app-card
+>
