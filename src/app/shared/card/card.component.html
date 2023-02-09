@@ -1,21 +1,19 @@
-<mat-card>
+<mat-card class="card">
   <mat-card-header>
     <mat-card-title>{{ name }}</mat-card-title>
   </mat-card-header>
   <img mat-card-image src="{{ imageUrl }}" alt="{{ name }}" />
-  <mat-card-content>
+  <mat-card-content class="card-content">
     <p>{{ description }}</p>
   </mat-card-content>
   <mat-divider></mat-divider>
-  <mat-card-content>
-    <p>{{ ingredients }}</p>
-  </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <p>{{ instructions }}</p>
-  </mat-card-content>
+
   <mat-card-actions>
-    <button mat-button>Edit</button>
-    <button mat-button>Delete</button>
+    <button mat-icon-button class="upvote-button" matTooltip="upvote">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    <button mat-icon-button class="downvote-button" matTooltip="Downvote">
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>

@@ -1,0 +1,33 @@
+.card
+    border: 1px solid #ff6f00
+    border-radius: 5px
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3)
+    cursor: pointer
+    transition: all 0.3s ease-in-out
+    max-width: 300px
+    &:hover
+        box-shadow: 0 4px 4px #ccc
+        transform: scale(1.02)
+
+    & img
+        object-fit: cover
+        max-height: 200px
+
+.card .card-content
+    padding: 10px
+
+.upvote-button, .downvote-button
+    background-color: transparent
+    border: none
+
+.upvote-button .mat-icon,
+.downvote-button .mat-icon
+    transition: color .3s ease-in-out
+
+.upvote-button:hover .mat-icon,
+.downvote-button:hover .mat-icon
+    color: #ff6f00
+
+.upvote-button:active .mat-icon,
+.downvote-button:active .mat-icon
+    color: #ff8c00

@@ -1,8 +1,15 @@
-<h1>Recipes</h1>
-
-<app-card
-  >*ngFor="let recipe of recipes" [name]="recipe.name"
-  [imageUrl]="recipe.imageUrl" [description]="recipe.description"
-  [ingredients]="recipe.ingredients"
-  [instructions]="recipe.instructions"</app-card
->
+<div class="background-gradient-container"></div>
+<div class="recipe-list-container">
+  <h1 class="recipe-list-title">Recipes</h1>
+  <div class="recipe-list">
+    <app-card
+      *ngFor="let recipe of recipes"
+      [name]="recipe.name"
+      [imageUrl]="recipe.imageUrl"
+      [description]="recipe.description"
+      [ingredients]="recipe.ingredients"
+      [instructions]="recipe.instructions"
+    >
+    </app-card>
+  </div>
+</div>

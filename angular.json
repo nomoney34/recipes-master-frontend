@@ -102,6 +102,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "angular-frontend-course:build:production",
+            "firebaseProject": "recipes-master-aee56",
+            "firebaseHostingSite": "recipes-master-aee56"
+          }
         }
       }
     }

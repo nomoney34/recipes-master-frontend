@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "recipes-master-aee56": {
+      "hosting": {
+        "angular-frontend-course": [
+          "recipes-master-aee56"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "recipes-master-aee56"
+  }
+}

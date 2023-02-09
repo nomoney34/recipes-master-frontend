@@ -1,0 +1,36 @@
+<form [formGroup]="registerForm">
+  <mat-form-field>
+    <input matInput placeholder="Email" formControlName="email" />
+    <mat-error *ngIf="registerForm.get('email').hasError('required')">
+      Email is required
+    </mat-error>
+    <mat-error *ngIf="registerForm.get('email').hasError('email')">
+      Email is not valid
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      type="password"
+      placeholder="Password"
+      formControlName="password"
+    />
+    <mat-error *ngIf="registerForm.get('password').hasError('required')">
+      Password is required
+    </mat-error>
+    <mat-error *ngIf="registerForm.get('password').hasError('minlength')">
+      Password must be at least 6 characters long
+    </mat-error>
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="register()"
+    [disabled]="registerForm.invalid"
+  >
+    Register
+  </button>
+  <button mat-button color="primary" (click)="login()">Login</button>
+</form>
