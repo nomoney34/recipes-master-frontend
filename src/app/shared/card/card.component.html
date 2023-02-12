@@ -1,19 +1,21 @@
-<mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>{{ name }}</mat-card-title>
-  </mat-card-header>
-  <img mat-card-image src="{{ imageUrl }}" alt="{{ name }}" />
-  <mat-card-content class="card-content">
-    <p>{{ description }}</p>
-  </mat-card-content>
-  <mat-divider></mat-divider>
+<div (click)="toDetails(id)">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>{{ name }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="{{ imageUrl }}" alt="{{ name }}" />
+    <mat-card-content class="card-content">
+      <p>{{ description }}</p>
+    </mat-card-content>
+    <mat-divider></mat-divider>
 
-  <mat-card-actions>
-    <button mat-icon-button class="upvote-button" matTooltip="upvote">
-      <mat-icon>arrow_upward</mat-icon>
-    </button>
-    <button mat-icon-button class="downvote-button" matTooltip="Downvote">
-      <mat-icon>arrow_downward</mat-icon>
-    </button>
-  </mat-card-actions>
-</mat-card>
+    <mat-card-actions>
+      <button mat-icon-button class="upvote-button" matTooltip="upvote">
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
+      <button mat-icon-button class="downvote-button" matTooltip="Downvote">
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

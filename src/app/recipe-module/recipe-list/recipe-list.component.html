@@ -10,11 +10,13 @@
   <div class="recipe-list">
     <app-card
       *ngFor="let recipe of recipes"
+      [id]="recipe.id"
       [name]="recipe.name"
       [imageUrl]="recipe.imageUrl"
       [description]="recipe.description"
       [ingredients]="recipe.ingredients"
       [instructions]="recipe.instructions"
+      (navigate)="toDetails($event)"
     >
     </app-card>
   </div>

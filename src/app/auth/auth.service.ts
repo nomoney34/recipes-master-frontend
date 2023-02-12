@@ -68,6 +68,10 @@ export class AuthService {
   }
 
   getCurrentUserId() {
-    return this.userData.uid;
+    const userData = JSON.parse(localStorage.getItem('user')!);
+    if (userData) {
+      return userData.uid;
+    }
+    return null;
   }
 }
