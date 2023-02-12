@@ -30,6 +30,7 @@ export class AuthComponent implements OnInit {
     const password = this.registerForm.get('password')?.value;
 
     this.authService.signUp(email, password);
+    this.dialogRef.close();
   }
 
   login() {

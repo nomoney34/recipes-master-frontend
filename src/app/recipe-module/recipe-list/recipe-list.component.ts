@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Recipe } from '../../shared/models/recipe';
@@ -17,7 +18,8 @@ export class RecipeListComponent implements OnInit {
   constructor(
     private recipeService: RecipeServiceService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +44,10 @@ export class RecipeListComponent implements OnInit {
   }
 
   signOut() {
-    this.authService.signOut();
+    this.authService.signOut().then(() => {
+      this.snackBar.open('Signed out successfully', 'Close', {
+        duration: 2000,
+      });
+    });
   }
 }

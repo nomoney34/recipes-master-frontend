@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from '../shared/models/user';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class AuthService {
   constructor(
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
-    public router: Router
+    public router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -32,7 +34,11 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         // this.SendVerificationMail();
-        this.SetUserData(result.user);
+        this.SetUserData(result.user).then(() => {
+          this.snackBar.open('Signed up successfully', 'Close', {
+            duration: 2000,
+          });
+        });
       })
       .catch((error) => {
         window.alert(error.message);
@@ -46,7 +52,15 @@ export class AuthService {
         this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(['recipes']);
+            this.router.navigate(['recipes']).then(() => {
+              this.snackBar.open(
+                'Welcome to the the world of recipes!',
+                'Close',
+                {
+                  duration: 2000,
+                }
+              );
+            });
           }
         });
       })

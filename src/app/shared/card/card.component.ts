@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-card',
@@ -12,6 +13,7 @@ export class CardComponent implements OnInit {
   @Input() ingredients!: string;
   @Input() instructions!: string;
   @Input() imageUrl!: string;
+  @Input() user!: User;
 
   @Output() navigate = new EventEmitter<string>();
 

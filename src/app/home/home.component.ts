@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthComponent } from '../auth/auth.component';
 import { AuthService } from '../auth/auth.service';
@@ -15,7 +16,8 @@ export class HomeComponent {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -23,7 +25,11 @@ export class HomeComponent {
   }
 
   toRecipes() {
-    this.router.navigate(['recipes']);
+    this.router.navigate(['recipes']).then(() => {
+      this.snackBar.open('Welcome to the the world of recipes!', 'Close', {
+        duration: 2000,
+      });
+    });
   }
 
   openLoginDialog() {
