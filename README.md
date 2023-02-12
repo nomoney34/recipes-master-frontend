@@ -1,27 +1,32 @@
-# AngularFrontendCourse
+# Recipes-Master
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.7.
 
-## Development server
+https://user-images.githubusercontent.com/79592589/218335953-6e7887c0-11e0-427e-b774-24dfd9b96a9d.mp4
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+This project is a recipe application that allows users to browse and manage their favorite recipes. It has multiple features including multiple routes, reusable components, inter-component communication, public and private routes, and multiple forms.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Routes
+The application has multiple routes including:
+1. Home route: displays a summary of all recipes
+2. Recipes route: displays a list of all recipes in cards
+3. Dynamic routes for each recipe: displays detailed information about a specific recipe
+4. Create recipe page: allows users to create new recipes and save them to the server
 
-## Build
+## Reusable Components
+The project uses reusable components, with the recipe cards being the most notable example. The recipe cards display a brief summary of each recipe and allow users to view more detailed information about a specific recipe.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Inter-Component Communication
+The components in this project communicate with each other in several ways. For example, the recipe service is used to fetch data from the server and insert it into each recipe card. When a user clicks on the image of a recipe card, an event is sent from the card to the recipe component, which opens the dynamic route of the recipe.
 
-## Running unit tests
+## Public and Private Routes
+The application has both public and private routes. The only private route is the create-recipe page, which is protected by an auth guard to ensure that only authenticated users can access it.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Forms
+The project has multiple forms including a login / register form, a create-recipe form, and an edit-recipe form. These forms allow users to interact with the application and manage their recipes.
 
-## Running end-to-end tests
+## Backend
+The project uses Firebase for its backend, which includes authentication, data storage, and hosting.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The live demo of the application can be found at https://recipes-master-aee56.web.app
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
