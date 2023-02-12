@@ -27,15 +27,11 @@
         <mat-icon matListIcon>home</mat-icon>
         <span matLine>Home</span>
       </a>
-      <a
-        mat-list-item
-        routerLink="/recipes/favorites"
-        routerLinkActive="active"
-      >
+      <a mat-list-item>
         <mat-icon matListIcon>favorite</mat-icon>
         <span matLine>Favorites</span>
       </a>
-      <a mat-list-item routerLink="/recipes/profile" routerLinkActive="active">
+      <a mat-list-item>
         <mat-icon matListIcon>person</mat-icon>
         <span matLine>Profile</span>
       </a>
@@ -45,7 +41,7 @@
       </a>
     </mat-drawer>
 
-    <mat-drawer-content>
+    <mat-drawer-content class="mat-drawer-content">
       <div class="background-gradient-container"></div>
       <div class="recipe-list-container">
         <div class="post-recipe-container">
@@ -58,6 +54,8 @@
             +
           </button>
         </div>
+
+        <h1>Welcome, {{ user.email }}</h1>
 
         <div class="recipe-list">
           <app-card

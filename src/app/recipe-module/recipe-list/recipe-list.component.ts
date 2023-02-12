@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/shared/models/user';
 import { Recipe } from '../../shared/models/recipe';
 import { RecipeServiceService } from '../recipe-service.service';
 
@@ -14,6 +15,7 @@ export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
   searchValue: string = '';
   filteredRecipes: Recipe[] = [];
+  user!: User;
 
   constructor(
     private recipeService: RecipeServiceService,
@@ -26,6 +28,7 @@ export class RecipeListComponent implements OnInit {
     this.recipeService.getRecipes().subscribe((recipes) => {
       this.recipes = recipes;
       this.filteredRecipes = recipes;
+      this.getUser();
     });
   }
 
@@ -49,5 +52,9 @@ export class RecipeListComponent implements OnInit {
         duration: 2000,
       });
     });
+  }
+
+  getUser() {
+    this.user = this.authService.getCurrentUser();
   }
 }

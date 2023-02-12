@@ -88,6 +88,10 @@ export class AuthService {
     });
   }
 
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem('user')!);
+  }
+
   getCurrentUserId() {
     const userData = JSON.parse(localStorage.getItem('user')!);
     if (userData) {

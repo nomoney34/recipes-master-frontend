@@ -2,7 +2,6 @@
     border: 1px solid #ff6f00
     border-radius: 5px
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3)
-    cursor: pointer
     transition: all 0.3s ease-in-out
     width: 300px
     &:hover
@@ -12,9 +11,14 @@
     & img
         object-fit: cover
         max-height: 200px
+        cursor: pointer
 
 .card .card-content
     padding: 10px
+
+.card .button-list
+    button
+        cursor: pointer
 
 .upvote-button, .downvote-button
     background-color: transparent

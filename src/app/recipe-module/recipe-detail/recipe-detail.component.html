@@ -23,6 +23,11 @@
           <h2>Instructions</h2>
           <p>{{ recipe.instructions }}</p>
         </div>
+
+        <div>
+          <h2>Created by</h2>
+          <p>{{ recipe.user.email }}</p>
+        </div>
       </div>
       <div *ngIf="isEditable">
         <form [formGroup]="recipeForm">
@@ -69,6 +74,7 @@
               formControlName="ingredients"
               [(ngModel)]="recipe.ingredients"
               placeholder="Ingredients"
+              style="height: 200px"
             ></textarea>
           </mat-form-field>
           <mat-form-field class="mat-form-field">
@@ -78,6 +84,7 @@
               formControlName="instructions"
               [(ngModel)]="recipe.instructions"
               placeholder="Instructions"
+              style="height: 200px"
             ></textarea>
           </mat-form-field>
         </form>

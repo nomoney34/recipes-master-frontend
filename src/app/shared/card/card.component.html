@@ -1,25 +1,32 @@
-<div (click)="toDetails(id)">
-  <mat-card class="card">
-    <mat-card-header>
-      <mat-card-title>{{ name }}</mat-card-title>
-    </mat-card-header>
-    <img mat-card-image src="{{ imageUrl }}" alt="{{ name }}" />
-    <mat-card-content class="card-content">
-      <p>{{ description }}</p>
-    </mat-card-content>
-    <mat-divider></mat-divider>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>{{ name }}</mat-card-title>
+  </mat-card-header>
+  <img
+    (click)="toDetails(id)"
+    mat-card-image
+    src="{{ imageUrl }}"
+    alt="{{ name }}"
+  />
+  <mat-card-content class="card-content">
+    <p>
+      {{
+        description.length > 50 ? description.slice(0, 50) + "..." : description
+      }}
+    </p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
 
-    <mat-card-actions>
-      <button mat-icon-button class="upvote-button" matTooltip="upvote">
-        <mat-icon>arrow_upward</mat-icon>
-      </button>
-      <button mat-icon-button class="downvote-button" matTooltip="Downvote">
-        <mat-icon>arrow_downward</mat-icon>
-      </button>
-      <button mat-icon-button class="favorite-button" matTooltip="Favorite">
-        <mat-icon>favorite</mat-icon>
-      </button>
-      <h3>by {{ user.email }}</h3>
-    </mat-card-actions>
-  </mat-card>
-</div>
+  <mat-card-actions class="button-list">
+    <button mat-icon-button class="upvote-button" matTooltip="upvote">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    <button mat-icon-button class="downvote-button" matTooltip="Downvote">
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+    <button mat-icon-button class="favorite-button" matTooltip="Favorite">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <h3>by {{ user.email }}</h3>
+  </mat-card-actions>
+</mat-card>
