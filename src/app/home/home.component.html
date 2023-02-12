@@ -3,7 +3,14 @@
   <p class="welcome-page__subtitle">
     Discover delicious recipes from around the world
   </p>
-  <button class="welcome-page__button" routerLink="/recipes">
-    Explore Recipes
+  <br /><br />
+  <button
+    class="welcome-page__button"
+    mat-raised-button
+    color="primary"
+    (click)="openLoginDialog()"
+  >
+    Login
   </button>
+  <!-- <span>Don't have an account?</span> -->
 </div>

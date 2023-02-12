@@ -1,0 +1,16 @@
+<div *ngIf="recipe">
+  <h1>
+    {{ recipe.name }}
+  </h1>
+  <p>{{ recipe.description }}</p>
+  <img [src]="recipe.imageUrl" alt="recipe image" />
+  <p>{{ recipe.ingredients }}</p>
+  <p>{{ recipe.instructions }}</p>
+
+  <button *ngIf="recipe.user.uid === currentUserId" (click)="updateRecipe()">
+    Update
+  </button>
+  <button *ngIf="recipe.user.uid === currentUserId" (click)="deleteRecipe()">
+    Delete
+  </button>
+</div>

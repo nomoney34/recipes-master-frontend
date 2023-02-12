@@ -1,6 +1,12 @@
 <div class="background-gradient-container"></div>
+<app-navbar></app-navbar>
 <div class="recipe-list-container">
-  <h1 class="recipe-list-title">Recipes</h1>
+  <div class="post-recipe-container">
+    <button mat-raised-button (click)="toCreateRecipe()" color="primary">
+      Post a Recipe
+    </button>
+  </div>
+
   <div class="recipe-list">
     <app-card
       *ngFor="let recipe of recipes"

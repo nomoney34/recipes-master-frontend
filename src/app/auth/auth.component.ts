@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -12,13 +13,15 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    public authService: AuthService,
+    public dialogRef: MatDialogRef<AuthComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required, Validators.minLength(6)],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -34,5 +37,6 @@ export class AuthComponent implements OnInit {
     const password = this.registerForm.get('password')?.value;
 
     this.authService.signIn(email, password);
+    this.dialogRef.close();
   }
 }
