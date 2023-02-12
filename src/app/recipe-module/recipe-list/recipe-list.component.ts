@@ -12,6 +12,7 @@ import { RecipeServiceService } from '../recipe-service.service';
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
   searchValue: string = '';
+  filteredRecipes: Recipe[] = [];
 
   constructor(
     private recipeService: RecipeServiceService,
@@ -22,7 +23,14 @@ export class RecipeListComponent implements OnInit {
   ngOnInit(): void {
     this.recipeService.getRecipes().subscribe((recipes) => {
       this.recipes = recipes;
+      this.filteredRecipes = recipes;
     });
+  }
+
+  filterRecipes() {
+    this.filteredRecipes = this.recipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(this.searchValue.toLowerCase())
+    );
   }
 
   toCreateRecipe() {

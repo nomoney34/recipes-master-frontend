@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe';
 import { RecipeServiceService } from '../recipe-service.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Observable } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -22,12 +23,16 @@ export class RecipeDetailComponent {
   downloadURL: Observable<string> | undefined;
   recipeImageURL: string = '';
 
+  isLoading: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private recipeService: RecipeServiceService,
     private authService: AuthService,
     private storage: AngularFireStorage,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -78,18 +83,31 @@ export class RecipeDetailComponent {
   }
 
   updateRecipe() {
+    this.isLoading = true;
     this.uploadImage().then(() => {
       this.recipe = {
         ...this.recipe,
         ...this.recipeForm.value,
         imageUrl: this.recipeImageURL,
       };
-      this.recipeService.updateRecipe(this.recipe.id, this.recipe);
-      this.isEditable = false;
+      this.recipeService.updateRecipe(this.recipe.id, this.recipe).then(() => {
+        this.snackBar.open('Recipe updated', 'Close', {
+          duration: 2000,
+        });
+        this.isEditable = false;
+        this.router.navigate(['/recipes']);
+      });
     });
   }
 
   deleteRecipe() {
-    this.recipeService.deleteRecipe(this.recipe.id);
+    this.isLoading = true;
+    this.recipeService.deleteRecipe(this.recipe.id).then(() => {
+      this.snackBar.open('Recipe deleted', 'Close', {
+        duration: 2000,
+      });
+      this.isEditable = false;
+      this.router.navigate(['/recipes']);
+    });
   }
 }

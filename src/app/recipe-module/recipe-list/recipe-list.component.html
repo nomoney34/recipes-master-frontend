@@ -8,11 +8,16 @@
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <img src="../../../assets/logo.png" alt="logo" />
+    <img src="logo.png" alt="Recipes Master" />
     <span class="spacer"></span>
     <mat-form-field class="searchbar" appearance="fill">
       <mat-label class="mat-label">Search</mat-label>
-      <input type="text" matInput [(ngModel)]="searchValue" />
+      <input
+        type="text"
+        matInput
+        [(ngModel)]="searchValue"
+        (ngModelChange)="filterRecipes()"
+      />
     </mat-form-field>
   </mat-toolbar>
 
@@ -56,7 +61,7 @@
 
         <div class="recipe-list">
           <app-card
-            *ngFor="let recipe of recipes"
+            *ngFor="let recipe of filteredRecipes"
             [id]="recipe.id"
             [name]="recipe.name"
             [imageUrl]="recipe.imageUrl"

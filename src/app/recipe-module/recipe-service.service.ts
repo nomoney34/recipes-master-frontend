@@ -39,12 +39,12 @@ export class RecipeServiceService {
     recipeRef.set(recipe);
   }
 
-  updateRecipe(id: string, recipe: Recipe) {
+  async updateRecipe(id: string, recipe: Recipe) {
     const recipeDoc = this.afs.doc<Recipe>(`recipes/${id}`);
     recipeDoc.update(recipe);
   }
 
-  deleteRecipe(id: string) {
+  async deleteRecipe(id: string) {
     const recipeDoc = this.afs.doc<Recipe>(`recipes/${id}`);
     recipeDoc.delete();
   }
