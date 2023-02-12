@@ -1,23 +1,64 @@
-<div class="background-gradient-container"></div>
-<app-navbar></app-navbar>
-<div class="recipe-list-container">
-  <div class="post-recipe-container">
-    <button mat-raised-button (click)="toCreateRecipe()" color="primary">
-      Post a Recipe
-    </button>
-  </div>
-
-  <div class="recipe-list">
-    <app-card
-      *ngFor="let recipe of recipes"
-      [id]="recipe.id"
-      [name]="recipe.name"
-      [imageUrl]="recipe.imageUrl"
-      [description]="recipe.description"
-      [ingredients]="recipe.ingredients"
-      [instructions]="recipe.instructions"
-      (navigate)="toDetails($event)"
+<div class="background-gradient-container">
+  <mat-toolbar class="navbar" color="primary">
+    <button
+      mat-icon-button
+      class="icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="drawer.toggle()"
     >
-    </app-card>
-  </div>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img src="your-logo-url" alt="logo" />
+    <span class="spacer"></span>
+    <mat-form-field class="searchbar" appearance="fill">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="searchValue" />
+    </mat-form-field>
+  </mat-toolbar>
+
+  <mat-drawer-container class="drawer-container" autosize>
+    <mat-drawer #drawer class="drawer" mode="side" opened>
+      <a mat-list-item routerLink="/home" routerLinkActive="active">
+        <mat-icon matListIcon>home</mat-icon>
+        <span matLine>Home</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/recipes/favorites"
+        routerLinkActive="active"
+      >
+        <mat-icon matListIcon>favorite</mat-icon>
+        <span matLine>Favorites</span>
+      </a>
+      <a mat-list-item routerLink="/recipes/profile" routerLinkActive="active">
+        <mat-icon matListIcon>person</mat-icon>
+        <span matLine>Profile</span>
+      </a>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <div class="background-gradient-container"></div>
+      <div class="recipe-list-container">
+        <div class="post-recipe-container">
+          <button mat-raised-button (click)="toCreateRecipe()" color="primary">
+            Post a Recipe
+          </button>
+        </div>
+
+        <div class="recipe-list">
+          <app-card
+            *ngFor="let recipe of recipes"
+            [id]="recipe.id"
+            [name]="recipe.name"
+            [imageUrl]="recipe.imageUrl"
+            [description]="recipe.description"
+            [ingredients]="recipe.ingredients"
+            [instructions]="recipe.instructions"
+            (navigate)="toDetails($event)"
+          >
+          </app-card>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>

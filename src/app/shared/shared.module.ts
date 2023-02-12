@@ -10,6 +10,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
 @NgModule({
   declarations: [CardComponent, AuthFormComponent],
   imports: [
@@ -23,6 +26,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatFormFieldModule,
     MatInputModule,
     MatToolbarModule,
+    MatMenuModule,
+    MatSidenavModule,
   ],
   exports: [
     CardComponent,
@@ -36,6 +41,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatFormFieldModule,
     MatInputModule,
     MatToolbarModule,
+    MatMenuModule,
+    MatSidenavModule,
   ],
 })
 export class SharedModule {}

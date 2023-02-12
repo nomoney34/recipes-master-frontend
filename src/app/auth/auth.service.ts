@@ -55,6 +55,13 @@ export class AuthService {
       });
   }
 
+  signOut() {
+    return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['home']);
+    });
+  }
+
   SetUserData(user: any) {
     const userRef = this.afs.doc(`users/${user.uid}`);
     const userData: User = {
@@ -73,5 +80,9 @@ export class AuthService {
       return userData.uid;
     }
     return null;
+  }
+
+  isLoggedIn() {
+    return this.getCurrentUserId() !== null;
   }
 }

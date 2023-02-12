@@ -5,12 +5,23 @@
   </p>
   <br /><br />
   <button
+    *ngIf="!isLoggedIn"
     class="welcome-page__button"
     mat-raised-button
     color="primary"
     (click)="openLoginDialog()"
   >
     Login
+  </button>
+
+  <button
+    *ngIf="isLoggedIn"
+    class="welcome-page__button"
+    mat-raised-button
+    color="primary"
+    (click)="toRecipes()"
+  >
+    Explore Recipes
   </button>
   <!-- <span>Don't have an account?</span> -->
 </div>
