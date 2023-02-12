@@ -1,3 +1,4 @@
+// --------------- RECIPE LIST --------------- //
 .recipe-list-container
     padding: 2rem
 
@@ -31,10 +32,37 @@
     justify-content: center
     margin-top: 2rem
 
+.post-button
+    width: 60px
+    height: 60px
+    border-radius: 50%
+    position: fixed
+    bottom: 20px
+    right: 20px
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 30px
+
+    &:hover
+        cursor: pointer
+
+// --------------- NAVBAR --------------- //
 .navbar
     display: flex
     align-items: center
+    background: linear-gradient(to right, #ff884d, #ff944d, #ffb24d, #ffbc57)
     height: 80px
+
+    .mat-label
+        color: #000
+
+    input[type="text"]
+        color: #000
+
+        .mat-error
+            color: #ff5733
+            font-size: 12px
 
 .icon
     background-color: transparent
@@ -45,21 +73,51 @@
         cursor: pointer
         background-color: rgba(0, 0, 0, 0.1)
 
+img
+    margin: 0 16px
+    width: 7%
+    object-fit: fill
+
 .logo
     height: 40px
     margin-right: 16px
 
 .searchbar
-    width: 50%
+    width: 30%
     margin-left: 16px
     margin-top: 15px
 
 .spacer
     flex: 1 1 auto
 
+// --------------- SIDENAV --------------- //
 .drawer-container
     height: 100%
 
 .drawer
     width: 20%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-evenly
     border: 1px solid #ccc
+    background-color: #f3f2f7
+
+.drawer
+    a
+        width: 100%
+        display: flex
+        align-items: center
+        padding: 1rem
+        text-decoration: none
+        color: #333
+
+        &:hover
+            background-color: rgba(0,0,0,0.05)
+
+        &.active
+            background-color: #333
+            color: #fff
+
+    .mat-icon
+        margin-right: 1rem

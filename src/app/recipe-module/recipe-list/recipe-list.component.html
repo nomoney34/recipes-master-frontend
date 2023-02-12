@@ -1,5 +1,5 @@
 <div class="background-gradient-container">
-  <mat-toolbar class="navbar" color="primary">
+  <mat-toolbar class="navbar">
     <button
       mat-icon-button
       class="icon"
@@ -8,11 +8,11 @@
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <img src="your-logo-url" alt="logo" />
+    <img src="../../../assets/logo.png" alt="logo" />
     <span class="spacer"></span>
     <mat-form-field class="searchbar" appearance="fill">
-      <mat-label>Search</mat-label>
-      <input matInput [(ngModel)]="searchValue" />
+      <mat-label class="mat-label">Search</mat-label>
+      <input type="text" matInput [(ngModel)]="searchValue" />
     </mat-form-field>
   </mat-toolbar>
 
@@ -34,14 +34,23 @@
         <mat-icon matListIcon>person</mat-icon>
         <span matLine>Profile</span>
       </a>
+      <a mat-list-item (click)="signOut()">
+        <mat-icon matListIcon>exit_to_app</mat-icon>
+        <span matLine>Sign Out</span>
+      </a>
     </mat-drawer>
 
     <mat-drawer-content>
       <div class="background-gradient-container"></div>
       <div class="recipe-list-container">
         <div class="post-recipe-container">
-          <button mat-raised-button (click)="toCreateRecipe()" color="primary">
-            Post a Recipe
+          <button
+            mat-raised-button
+            (click)="toCreateRecipe()"
+            color="primary"
+            class="post-button"
+          >
+            +
           </button>
         </div>
 
@@ -62,3 +71,5 @@
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
+
+<router-outlet></router-outlet>

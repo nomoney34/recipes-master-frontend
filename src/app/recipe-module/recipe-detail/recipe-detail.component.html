@@ -1,83 +1,97 @@
-<div *ngIf="recipe">
-  <div *ngIf="!isEditable">
-    <h1>{{ recipe.name }}</h1>
-    <p>{{ recipe.description }}</p>
-    <img [src]="recipe.imageUrl" alt="recipe image" />
-    <p>{{ recipe.ingredients }}</p>
-    <p>{{ recipe.instructions }}</p>
-  </div>
-  <div *ngIf="isEditable">
-    <form [formGroup]="recipeForm">
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Name"
-          formControlName="name"
-          type="text"
-          [(ngModel)]="recipe.name"
-          placeholder="Recipe name"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          placeholder="Description"
-          formControlName="description"
-          [(ngModel)]="recipe.description"
-          placeholder="Description"
-        />
-      </mat-form-field>
-      <div class="form-field">
-        <mat-label class="mat-label">Image</mat-label>
-        <input
-          multiple
-          type="file"
-          formControlName="imagePath"
-          required
-          (change)="onImageSelected($event)"
-        />
-        <mat-error
-          class="mat-error"
-          *ngIf="recipeForm.get('imagePath')!.hasError('required')"
-        >
-          Image is required
-        </mat-error>
+<div class="recipe-details">
+  <div *ngIf="recipe">
+    <div *ngIf="!isEditable">
+      <h1>{{ recipe.name }}</h1>
+      <div>
+        <h2>Description</h2>
+        <p>{{ recipe.description }}</p>
       </div>
-      <mat-form-field>
-        <textarea
-          matInput
-          placeholder="Ingredients"
-          formControlName="ingredients"
-          [(ngModel)]="recipe.ingredients"
-          placeholder="Ingredients"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <textarea
-          matInput
-          placeholder="Instructions"
-          formControlName="instructions"
-          [(ngModel)]="recipe.instructions"
-          placeholder="Instructions"
-        ></textarea>
-      </mat-form-field>
-    </form>
-  </div>
 
-  <button
-    *ngIf="recipe.user.uid === currentUserId && !isEditable"
-    (click)="isEditable = !isEditable"
-  >
-    Edit
-  </button>
-  <button
-    *ngIf="recipe.user.uid === currentUserId && isEditable"
-    (click)="updateRecipe()"
-  >
-    Save
-  </button>
-  <button *ngIf="recipe.user.uid === currentUserId" (click)="deleteRecipe()">
-    Delete
-  </button>
+      <img [src]="recipe.imageUrl" alt="recipe image" />
+
+      <div>
+        <h2>Ingredients</h2>
+        <p>{{ recipe.ingredients }}</p>
+      </div>
+
+      <div>
+        <h2>Instructions</h2>
+        <p>{{ recipe.instructions }}</p>
+      </div>
+    </div>
+    <div *ngIf="isEditable">
+      <form [formGroup]="recipeForm">
+        <mat-form-field class="mat-form-field">
+          <input
+            matInput
+            placeholder="Name"
+            formControlName="name"
+            type="text"
+            [(ngModel)]="recipe.name"
+            placeholder="Recipe name"
+          />
+        </mat-form-field>
+        <mat-form-field class="mat-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="Description"
+            formControlName="description"
+            [(ngModel)]="recipe.description"
+            placeholder="Description"
+          />
+        </mat-form-field>
+        <div class="form-field">
+          <mat-label class="mat-label">Image</mat-label>
+          <input
+            multiple
+            type="file"
+            formControlName="imagePath"
+            required
+            (change)="onImageSelected($event)"
+          />
+          <mat-error
+            class="mat-error"
+            *ngIf="recipeForm.get('imagePath')!.hasError('required')"
+          >
+            Image is required
+          </mat-error>
+        </div>
+        <mat-form-field class="mat-form-field">
+          <textarea
+            matInput
+            placeholder="Ingredients"
+            formControlName="ingredients"
+            [(ngModel)]="recipe.ingredients"
+            placeholder="Ingredients"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field">
+          <textarea
+            matInput
+            placeholder="Instructions"
+            formControlName="instructions"
+            [(ngModel)]="recipe.instructions"
+            placeholder="Instructions"
+          ></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <button
+      *ngIf="recipe.user.uid === currentUserId"
+      (click)="isEditable = !isEditable"
+    >
+      {{ isEditable ? "Cancel" : "Edit" }}
+    </button>
+    <button
+      *ngIf="recipe.user.uid === currentUserId && isEditable"
+      (click)="updateRecipe()"
+    >
+      Save
+    </button>
+    <button *ngIf="recipe.user.uid === currentUserId" (click)="deleteRecipe()">
+      Delete
+    </button>
+  </div>
 </div>

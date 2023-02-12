@@ -31,7 +31,7 @@ export class RecipeServiceService {
       );
   }
 
-  addRecipe(recipe: Recipe, user: User) {
+  async addRecipe(recipe: Recipe, user: User) {
     const recipeRef = this.afs.collection<Recipe>('recipes').doc();
     const recipeId = recipeRef.ref.id;
     recipe.id = recipeId;

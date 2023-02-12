@@ -6,6 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { Recipe } from 'src/app/shared/models/recipe';
@@ -23,11 +25,8 @@ export class CreateRecipeComponent {
   }
   user: User = JSON.parse(localStorage.getItem('user') || '{}');
 
-  // recipeName!: string;
-  // description!: string;
   image?: File;
-  // ingredients!: string;
-  // instructions!: string;
+  isLoading: boolean = false;
 
   downloadURL: Observable<string> | undefined;
   recipeImageURL: string = '';
@@ -38,7 +37,9 @@ export class CreateRecipeComponent {
   constructor(
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
-    private recipeService: RecipeServiceService
+    private recipeService: RecipeServiceService,
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +78,7 @@ export class CreateRecipeComponent {
   }
 
   addRecipe() {
+    this.isLoading = true;
     this.uploadImage().then(() => {
       this.recipe = {
         id: '',
@@ -87,7 +89,12 @@ export class CreateRecipeComponent {
         instructions: this.recipeForm.get('instructions')?.value,
         user: this.user,
       };
-      this.recipeService.addRecipe(this.recipe, this.user);
+      this.recipeService.addRecipe(this.recipe, this.user).then(() => {
+        this.snackBar.open('Recipe added successfully', 'Close', {
+          duration: 2000,
+        });
+        this.router.navigate(['/recipes']);
+      });
     });
   }
 }

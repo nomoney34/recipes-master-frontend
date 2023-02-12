@@ -4,12 +4,17 @@ import { RecipeListComponent } from './recipe-module/recipe-list/recipe-list.com
 import { HomeComponent } from './home/home.component';
 import { CreateRecipeComponent } from './recipe-module/create-recipe/create-recipe.component';
 import { RecipeDetailComponent } from './recipe-module/recipe-detail/recipe-detail.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'recipes', component: RecipeListComponent },
-  { path: 'recipes/create-recipe', component: CreateRecipeComponent },
+  {
+    path: 'recipes/create-recipe',
+    component: CreateRecipeComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'recipes/:id', component: RecipeDetailComponent },
 ];
 

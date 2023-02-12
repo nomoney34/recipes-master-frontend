@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Recipe } from '../../shared/models/recipe';
 import { RecipeServiceService } from '../recipe-service.service';
 
@@ -14,6 +15,7 @@ export class RecipeListComponent implements OnInit {
 
   constructor(
     private recipeService: RecipeServiceService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -29,5 +31,9 @@ export class RecipeListComponent implements OnInit {
 
   toDetails(id: string) {
     this.router.navigate(['recipes', id]);
+  }
+
+  signOut() {
+    this.authService.signOut();
   }
 }

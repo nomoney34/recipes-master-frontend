@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [CardComponent, AuthFormComponent],
@@ -28,6 +30,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatToolbarModule,
     MatMenuModule,
     MatSidenavModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     CardComponent,
@@ -43,6 +47,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatToolbarModule,
     MatMenuModule,
     MatSidenavModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class SharedModule {}
