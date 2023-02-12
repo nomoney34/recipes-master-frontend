@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe';
 import { RecipeServiceService } from '../recipe-service.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { finalize, Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -12,11 +15,19 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class RecipeDetailComponent {
   recipe!: Recipe;
   currentUserId!: string;
+  isEditable = false;
+  recipeForm!: FormGroup;
+
+  image?: File;
+  downloadURL: Observable<string> | undefined;
+  recipeImageURL: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeServiceService,
-    private authService: AuthService
+    private authService: AuthService,
+    private storage: AngularFireStorage,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -24,6 +35,15 @@ export class RecipeDetailComponent {
     if (id) {
       this.recipeService.getRecipe(id).subscribe((recipe) => {
         this.recipe = recipe;
+        this.recipeService.getRecipe(id).subscribe((recipe) => {
+          this.recipeForm = this.formBuilder.group({
+            name: [recipe.name],
+            description: [recipe.description],
+            imagePath: [''],
+            ingredients: [recipe.ingredients],
+            instructions: [recipe.instructions],
+          });
+        });
       });
     } else {
       throw new Error('No id provided');
@@ -32,8 +52,41 @@ export class RecipeDetailComponent {
     this.currentUserId = this.authService.getCurrentUserId();
   }
 
+  onImageSelected(event: any) {
+    this.image = event.target.files[0];
+  }
+
+  uploadImage() {
+    return new Promise<void>((resolve, reject) => {
+      const fileName = `${new Date().getTime()}_${this.image?.name}`;
+      const filePath = `images/${fileName}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, this.image!);
+      task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRef.getDownloadURL();
+            this.downloadURL.subscribe((url) => {
+              this.recipeImageURL = url;
+              resolve();
+            });
+          })
+        )
+        .subscribe();
+    });
+  }
+
   updateRecipe() {
-    this.recipeService.updateRecipe(this.recipe.id, this.recipe);
+    this.uploadImage().then(() => {
+      this.recipe = {
+        ...this.recipe,
+        ...this.recipeForm.value,
+        imageUrl: this.recipeImageURL,
+      };
+      this.recipeService.updateRecipe(this.recipe.id, this.recipe);
+      this.isEditable = false;
+    });
   }
 
   deleteRecipe() {
