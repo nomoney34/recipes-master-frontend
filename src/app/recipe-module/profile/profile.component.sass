@@ -1,0 +1,64 @@
+.profile-container
+    max-width: 600px
+    margin: 0 auto
+    padding: 20px
+
+.profile-header
+    text-align: center
+    margin-bottom: 20px
+
+.profile-image
+    width: 150px
+    height: 150px
+    border-radius: 50%
+    cursor: pointer
+
+.profile-name
+    margin-top: 10px
+
+.profile-description
+    margin-top: 10px
+    font-style: italic
+
+.profile-tabs
+    border: 1px solid #ccc
+    border-radius: 5px
+
+.tab-list
+    list-style-type: none
+    margin: 0
+    padding: 0
+    display: flex
+
+.tab-item
+    flex: 1
+    padding: 10px
+    text-align: center
+    cursor: pointer
+    background-color: #f0f0f0
+    border-bottom: 1px solid #ccc
+
+    &:hover
+        background-color: #e0e0e0
+
+    &.active
+        background-color: #ccc
+
+.tab-content
+    padding: 20px
+
+// .recipes-tab, .interactions-tab, .yummies-tab
+//     display: none
+
+.recipes-tab.show, .interactions-tab.show, .yummies-tab.show
+    display: block
+
+h3
+    margin-top: 0
+
+ul
+    padding: 0
+    list-style-type: none
+
+li
+    margin-bottom: 10px

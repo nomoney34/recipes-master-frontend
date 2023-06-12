@@ -81,6 +81,11 @@ export class AuthService {
     const userData: User = {
       uid: user.uid,
       email: user.email,
+      username: user.username
+        ? user.username
+        : this.extractUsernameFromEmail(user.email),
+      description: user.description ? user.description : '',
+      photoURL: user.photoURL ? user.photoURL : '',
     };
 
     return userRef.set(userData, {
@@ -102,5 +107,9 @@ export class AuthService {
 
   isLoggedIn() {
     return this.getCurrentUserId() !== null;
+  }
+
+  private extractUsernameFromEmail(email: string) {
+    return email.split('@')[0];
   }
 }

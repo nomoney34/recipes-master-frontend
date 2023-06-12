@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { CreateRecipeComponent } from './recipe-module/create-recipe/create-recipe.component';
 import { RecipeDetailComponent } from './recipe-module/recipe-detail/recipe-detail.component';
 import { AuthGuard } from './guard/auth.guard';
+import { ProfileComponent } from './recipe-module/profile/profile.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'recipes/:id', component: RecipeDetailComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
