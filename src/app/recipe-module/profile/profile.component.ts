@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChangeUsernameDialogComponent } from 'src/app/shared/change-username-dialog/change-username-dialog.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
+import { RecipeServiceService } from '../recipe-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,12 +16,13 @@ export class ProfileComponent {
   currentUser: any;
   user: any;
   selectedFile: File | null = null;
-
+  userRecipes: any[] = [];
   activeTab = 'recipes';
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private recipeService: RecipeServiceService,
     private dialog: MatDialog,
     private storage: AngularFireStorage
   ) {}
@@ -30,8 +32,17 @@ export class ProfileComponent {
     const userId = this.currentUser.uid;
     this.userService.getUser(userId).subscribe((user) => {
       this.user = user;
+      this.filterUserRecipes();
     });
     console.log(this.user);
+  }
+
+  filterUserRecipes() {
+    this.recipeService.getRecipes().subscribe((recipes) => {
+      this.userRecipes = recipes.filter(
+        (recipe) => recipe.user.uid === this.user.uid
+      );
+    });
   }
 
   changeProfileImage() {
