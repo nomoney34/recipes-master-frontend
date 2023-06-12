@@ -1,0 +1,93 @@
+<div class="profile-container" *ngIf="user">
+  <div class="profile-header">
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      style="display: none"
+      #fileInput
+    />
+    <img
+      class="profile-image"
+      [src]="user.photoURL || 'assets/user-profile-image.jpg'"
+      alt="Profile Image"
+      (click)="fileInput.click()"
+    />
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="uploadProfileImage()"
+      *ngIf="selectedFile"
+    >
+      Upload
+    </button>
+
+    <h2 class="profile-name">{{ user.username }}</h2>
+    <p class="profile-description">
+      {{ user.description || "No description yet" }}
+    </p>
+    <button mat-icon-button (click)="openUsernameDialog()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+
+  <div class="profile-tabs">
+    <ul class="tab-list">
+      <li
+        class="tab-item"
+        [class.active]="activeTab === 'recipes'"
+        (click)="setActiveTab('recipes')"
+      >
+        Recipes
+      </li>
+      <li
+        class="tab-item"
+        [class.active]="activeTab === 'interactions'"
+        (click)="setActiveTab('interactions')"
+      >
+        Interactions
+      </li>
+      <li
+        class="tab-item"
+        [class.active]="activeTab === 'yummies'"
+        (click)="setActiveTab('yummies')"
+      >
+        Yummies
+      </li>
+    </ul>
+    <div class="tab-content">
+      <!-- Recipes Tab Content -->
+      <div class="recipes-tab" *ngIf="activeTab === 'recipes'">
+        <h3>Your Recipes</h3>
+        <ul>
+          <li>Recipe 1</li>
+          <li>Recipe 2</li>
+          <li>Recipe 3</li>
+          <!-- ... -->
+        </ul>
+      </div>
+
+      <!-- Interactions Tab Content -->
+      <div class="interactions-tab" *ngIf="activeTab === 'interactions'">
+        <h3>Your Interactions</h3>
+        <ul>
+          <li>Interaction 1</li>
+          <li>Interaction 2</li>
+          <li>Interaction 3</li>
+          <!-- ... -->
+        </ul>
+      </div>
+
+      <!-- Yummies Tab Content -->
+      <div class="yummies-tab" *ngIf="activeTab === 'yummies'">
+        <h3>Your Yummies</h3>
+        <ul>
+          <li>Yummy 1</li>
+          <li>Yummy 2</li>
+          <li>Yummy 3</li>
+          <!-- ... -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

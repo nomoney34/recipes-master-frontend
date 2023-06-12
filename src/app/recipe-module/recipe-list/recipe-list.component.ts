@@ -42,6 +42,10 @@ export class RecipeListComponent implements OnInit {
     this.router.navigate(['recipes/create-recipe']);
   }
 
+  toProfile() {
+    this.router.navigate(['profile']);
+  }
+
   toDetails(id: string) {
     this.router.navigate(['recipes', id]);
   }

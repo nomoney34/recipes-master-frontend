@@ -13,9 +13,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ChangeUsernameDialogComponent } from './change-username-dialog/change-username-dialog.component';
 
 @NgModule({
-  declarations: [CardComponent],
+  declarations: [CardComponent, ChangeUsernameDialogComponent],
   imports: [
     CommonModule,
     MatCardModule,

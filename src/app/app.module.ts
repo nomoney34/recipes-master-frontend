@@ -26,9 +26,7 @@ import { AuthService } from './auth/auth.service';
     RecipeModuleModule,
     BrowserAnimationsModule,
     SharedModule,
-    // provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // provideFirestore(() => getFirestore()),
-    // provideAuth(() => getAuth()),
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
