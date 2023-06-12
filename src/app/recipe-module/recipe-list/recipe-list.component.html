@@ -1,4 +1,4 @@
-<div class="background-gradient-container">
+<div class="background-gradient-container" *ngIf="user">
   <mat-toolbar class="navbar">
     <button
       mat-icon-button
@@ -27,11 +27,12 @@
         <mat-icon matListIcon>home</mat-icon>
         <span matLine>Home</span>
       </a>
-      <a mat-list-item>
+      <a mat-list-item routerLink="/favorites" routerLinkActive="active">
         <mat-icon matListIcon>favorite</mat-icon>
         <span matLine>Favorites</span>
       </a>
-      <a mat-list-item (click)="toProfile()">
+
+      <a mat-list-item routerLink="/profile">
         <mat-icon matListIcon>person</mat-icon>
         <span matLine>Profile</span>
       </a>
@@ -55,7 +56,7 @@
           </button>
         </div>
 
-        <h1>Welcome, {{ user.email }}</h1>
+        <h1>Welcome, {{ user.username }}</h1>
 
         <div class="recipe-list">
           <app-card
@@ -66,6 +67,8 @@
             [description]="recipe.description"
             [ingredients]="recipe.ingredients"
             [instructions]="recipe.instructions"
+            [upvotes]="recipe.upvotes"
+            [downvotes]="recipe.downvotes"
             [user]="recipe.user"
             (navigate)="toDetails($event)"
           >

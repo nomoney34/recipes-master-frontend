@@ -6,6 +6,7 @@ import { CreateRecipeComponent } from './recipe-module/create-recipe/create-reci
 import { RecipeDetailComponent } from './recipe-module/recipe-detail/recipe-detail.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ProfileComponent } from './recipe-module/profile/profile.component';
+import { FavoritesComponent } from './recipe-module/favorites/favorites.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,6 +19,11 @@ const routes: Routes = [
   },
   { path: 'recipes/:id', component: RecipeDetailComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: 'favorites',
+    component: FavoritesComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

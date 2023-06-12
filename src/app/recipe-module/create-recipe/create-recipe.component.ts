@@ -13,6 +13,8 @@ import { finalize } from 'rxjs/operators';
 import { Recipe } from 'src/app/shared/models/recipe';
 import { User } from 'src/app/shared/models/user';
 import { RecipeServiceService } from '../recipe-service.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-create-recipe',
@@ -23,7 +25,8 @@ export class CreateRecipeComponent {
   onSubmit() {
     throw new Error('Method not implemented.');
   }
-  user: User = JSON.parse(localStorage.getItem('user') || '{}');
+  currentUser: any;
+  user: any;
 
   image?: File;
   isLoading: boolean = false;
@@ -38,6 +41,8 @@ export class CreateRecipeComponent {
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
     private recipeService: RecipeServiceService,
+    private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
@@ -49,6 +54,12 @@ export class CreateRecipeComponent {
       imagePath: ['', Validators.required],
       ingredients: ['', Validators.required],
       instructions: ['', Validators.required],
+    });
+
+    this.currentUser = this.authService.getCurrentUser();
+    const userId = this.currentUser.uid;
+    this.userService.getUser(userId).subscribe((user) => {
+      this.user = user;
     });
   }
 
@@ -87,7 +98,10 @@ export class CreateRecipeComponent {
         imageUrl: this.recipeImageURL,
         ingredients: this.recipeForm.get('ingredients')?.value,
         instructions: this.recipeForm.get('instructions')?.value,
+        upvotes: [],
+        downvotes: [],
         user: this.user,
+        bookmarkedBy: [],
       };
       this.recipeService.addRecipe(this.recipe, this.user).then(() => {
         this.snackBar.open('Recipe added successfully', 'Close', {

@@ -6,6 +6,7 @@ import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
     CreateRecipeComponent,
     RecipeDetailComponent,
     ProfileComponent,
+    FavoritesComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule],
 })

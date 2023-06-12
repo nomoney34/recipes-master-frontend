@@ -7,5 +7,8 @@ export interface Recipe {
   ingredients: string;
   instructions: string;
   imageUrl: string;
+  upvotes: string[];
+  downvotes: string[];
   user: User;
+  bookmarkedBy: string[];
 }
