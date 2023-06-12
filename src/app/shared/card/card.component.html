@@ -18,15 +18,34 @@
   <mat-divider></mat-divider>
 
   <mat-card-actions class="button-list">
-    <button mat-icon-button class="upvote-button" matTooltip="upvote">
+    <button
+      mat-icon-button
+      class="upvote-button"
+      matTooltip="upvote"
+      (click)="upvoteRecipe(id, user)"
+      [class.active]="isUpvoted(user, upvotes)"
+    >
       <mat-icon>arrow_upward</mat-icon>
     </button>
-    <button mat-icon-button class="downvote-button" matTooltip="Downvote">
+    <span class="vote-count">{{ upvotes.length }}</span>
+    <button
+      mat-icon-button
+      class="downvote-button"
+      matTooltip="Downvote"
+      (click)="downvoteRecipe(id, user)"
+      [class.active]="isDownvoted(user, downvotes)"
+    >
       <mat-icon>arrow_downward</mat-icon>
     </button>
-    <button mat-icon-button class="favorite-button" matTooltip="Favorite">
+    <span class="vote-count">{{ downvotes.length }}</span>
+    <button
+      mat-icon-button
+      class="favorite-button"
+      matTooltip="Favorite"
+      (click)="bookmarkRecipe(id, user)"
+    >
       <mat-icon>favorite</mat-icon>
     </button>
-    <h3>by {{ user.email }}</h3>
+    <h3>by {{ user.username }}</h3>
   </mat-card-actions>
 </mat-card>

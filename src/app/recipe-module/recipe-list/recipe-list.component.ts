@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/shared/models/user';
 import { Recipe } from '../../shared/models/recipe';
 import { RecipeServiceService } from '../recipe-service.service';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -15,11 +16,13 @@ export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
   searchValue: string = '';
   filteredRecipes: Recipe[] = [];
-  user!: User;
+  currentUser: any;
+  user: any;
 
   constructor(
     private recipeService: RecipeServiceService,
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
@@ -59,6 +62,11 @@ export class RecipeListComponent implements OnInit {
   }
 
   getUser() {
-    this.user = this.authService.getCurrentUser();
+    this.currentUser = this.authService.getCurrentUser();
+    const userId = this.currentUser.uid;
+    this.userService.getUser(userId).subscribe((user) => {
+      this.user = user;
+      console.log(this.user);
+    });
   }
 }
