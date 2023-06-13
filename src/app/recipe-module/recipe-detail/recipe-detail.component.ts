@@ -3,10 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe';
 import { RecipeServiceService } from '../recipe-service.service';
 import { AuthService } from 'src/app/auth/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { finalize, Observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize, Observable, tap } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Comment } from 'src/app/shared/models/comment';
+import { CommentService } from 'src/app/services/comment.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -19,17 +22,26 @@ export class RecipeDetailComponent {
   isEditable = false;
   recipeForm!: FormGroup;
 
+  currentUser: any;
+  user: any;
+
   image?: File;
   downloadURL: Observable<string> | undefined;
   recipeImageURL: string = '';
 
   isLoading: boolean = false;
 
+  comments: Comment[] = [];
+
+  commentForm!: FormGroup;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private recipeService: RecipeServiceService,
     private authService: AuthService,
+    private userService: UserService,
+    private commentService: CommentService,
     private storage: AngularFireStorage,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar
@@ -49,6 +61,18 @@ export class RecipeDetailComponent {
             instructions: [recipe.instructions],
           });
         });
+      });
+
+      this.commentForm = this.formBuilder.group({
+        content: ['', Validators.required],
+      });
+
+      this.commentService.getCommentsForRecipe(id).subscribe((comments) => {
+        this.comments = comments;
+      });
+
+      this.getUser().subscribe((user) => {
+        this.user = user;
       });
     } else {
       throw new Error('No id provided');
@@ -109,5 +133,38 @@ export class RecipeDetailComponent {
       this.isEditable = false;
       this.router.navigate(['/recipes']);
     });
+  }
+
+  addComment() {
+    const comment: Comment = {
+      id: '',
+      content: this.commentForm.get('content')?.value,
+      recipe: this.recipe,
+      user: this.user,
+      timestamp: new Date(),
+      upvotes: [],
+      downvotes: [],
+    };
+
+    if (!comment.content) {
+      return;
+    }
+
+    this.commentService.addComment(comment).then(() => {
+      this.snackBar.open('Comment added', 'Close', {
+        duration: 2000,
+      });
+      this.commentForm.reset();
+    });
+  }
+
+  getUser() {
+    this.currentUser = this.authService.getCurrentUser();
+    const userId = this.currentUser.uid;
+    return this.userService.getUser(userId).pipe(
+      tap((user) => {
+        this.user = user;
+      })
+    );
   }
 }

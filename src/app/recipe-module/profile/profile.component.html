@@ -76,12 +76,20 @@
       <!-- Interactions Tab Content -->
       <div class="interactions-tab" *ngIf="activeTab === 'interactions'">
         <h3>Your Interactions</h3>
-        <ul>
-          <li>Interaction 1</li>
-          <li>Interaction 2</li>
-          <li>Interaction 3</li>
-          <!-- ... -->
-        </ul>
+        <div *ngFor="let comment of comments">
+          <!-- <app-card
+            [id]="comment.recipe.id"
+            [name]="comment.recipe.name"
+            [imageUrl]="comment.recipe.imageUrl"
+            [description]="comment.recipe.description"
+            [ingredients]="comment.recipe.ingredients"
+            [instructions]="comment.recipe.instructions"
+            [upvotes]="comment.recipe.upvotes"
+            [downvotes]="comment.recipe.downvotes"
+            [user]="comment.recipe.user"
+          ></app-card> -->
+          <app-comment [comment]="comment"></app-comment>
+        </div>
       </div>
 
       <!-- Yummies Tab Content -->

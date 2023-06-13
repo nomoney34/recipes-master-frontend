@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { UserService } from 'src/app/user.service';
+import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeUsernameDialogComponent } from 'src/app/shared/change-username-dialog/change-username-dialog.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
 import { RecipeServiceService } from '../recipe-service.service';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,7 @@ export class ProfileComponent {
 
   userRecipes: any[] = [];
   upvotedRecipes: any[] = [];
+  comments: any[] = [];
 
   activeTab = 'recipes';
 
@@ -26,6 +28,7 @@ export class ProfileComponent {
     private authService: AuthService,
     private userService: UserService,
     private recipeService: RecipeServiceService,
+    private commentService: CommentService,
     private dialog: MatDialog,
     private storage: AngularFireStorage
   ) {}
@@ -37,6 +40,7 @@ export class ProfileComponent {
       this.user = user;
       this.filterUserRecipes();
       this.filterUpvotedRecipes();
+      this.filterInteractions();
     });
     console.log(this.user);
   }
@@ -55,6 +59,14 @@ export class ProfileComponent {
         recipe.upvotes.includes(this.user.uid)
       );
     });
+  }
+
+  filterInteractions() {
+    this.commentService
+      .getCommentsForUser(this.user.uid)
+      .subscribe((comments) => {
+        this.comments = comments;
+      });
   }
 
   changeProfileImage() {

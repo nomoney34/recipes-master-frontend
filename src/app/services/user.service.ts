@@ -4,8 +4,8 @@ import {
   AngularFirestoreDocument,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
-import { User } from './shared/models/user';
-import { AuthService } from './auth/auth.service';
+import { User } from '../shared/models/user';
+import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
