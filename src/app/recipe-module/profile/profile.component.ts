@@ -16,7 +16,10 @@ export class ProfileComponent {
   currentUser: any;
   user: any;
   selectedFile: File | null = null;
+
   userRecipes: any[] = [];
+  upvotedRecipes: any[] = [];
+
   activeTab = 'recipes';
 
   constructor(
@@ -33,6 +36,7 @@ export class ProfileComponent {
     this.userService.getUser(userId).subscribe((user) => {
       this.user = user;
       this.filterUserRecipes();
+      this.filterUpvotedRecipes();
     });
     console.log(this.user);
   }
@@ -41,6 +45,14 @@ export class ProfileComponent {
     this.recipeService.getRecipes().subscribe((recipes) => {
       this.userRecipes = recipes.filter(
         (recipe) => recipe.user.uid === this.user.uid
+      );
+    });
+  }
+
+  filterUpvotedRecipes() {
+    this.recipeService.getRecipes().subscribe((recipes) => {
+      this.upvotedRecipes = recipes.filter((recipe) =>
+        recipe.upvotes.includes(this.user.uid)
       );
     });
   }
