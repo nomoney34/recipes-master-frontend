@@ -14,9 +14,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChangeUsernameDialogComponent } from './change-username-dialog/change-username-dialog.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
-  declarations: [CardComponent, ChangeUsernameDialogComponent],
+  declarations: [
+    CardComponent,
+    ChangeUsernameDialogComponent,
+    CommentComponent,
+  ],
   imports: [
     CommonModule,
     MatCardModule,
@@ -34,6 +39,7 @@ import { ChangeUsernameDialogComponent } from './change-username-dialog/change-u
     MatProgressSpinnerModule,
   ],
   exports: [
+    CommentComponent,
     CardComponent,
     MatCardModule,
     MatDividerModule,
