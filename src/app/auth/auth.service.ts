@@ -33,12 +33,18 @@ export class AuthService {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        // this.SendVerificationMail();
-        this.SetUserData(result.user).then(() => {
-          this.snackBar.open('Signed up successfully', 'Close', {
-            duration: 2000,
+        const userRef = this.afs.doc(`users/${result.user!.uid}`);
+        userRef
+          .get()
+          .toPromise()
+          .then((userDoc) => {
+            const userData = userDoc!.data();
+            this.SetUserData(userData, result.user).then(() => {
+              this.snackBar.open('Signed up successfully', 'Close', {
+                duration: 2000,
+              });
+            });
           });
-        });
       })
       .catch((error) => {
         window.alert(error.message);
@@ -49,17 +55,21 @@ export class AuthService {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.SetUserData(result.user);
+        const userRef = this.afs.doc(`users/${result.user!.uid}`);
+        userRef
+          .get()
+          .toPromise()
+          .then((userDoc) => {
+            const userData = userDoc!.data();
+            this.SetUserData(userData, result.user);
+          });
+
         this.afAuth.authState.subscribe((user) => {
           if (user) {
             this.router.navigate(['recipes']).then(() => {
-              this.snackBar.open(
-                'Welcome to the the world of recipes!',
-                'Close',
-                {
-                  duration: 2000,
-                }
-              );
+              this.snackBar.open('Welcome to the world of recipes!', 'Close', {
+                duration: 2000,
+              });
             });
           }
         });
@@ -76,21 +86,19 @@ export class AuthService {
     });
   }
 
-  SetUserData(user: any) {
+  SetUserData(userData: any, user: any) {
     const userRef = this.afs.doc(`users/${user.uid}`);
-    const userData: User = {
+    const updatedUserData: User = {
       uid: user.uid,
       email: user.email,
-      username: user.username
-        ? user.username
+      username: userData.username
+        ? userData.username
         : this.extractUsernameFromEmail(user.email),
-      description: user.description ? user.description : '',
-      photoURL: user.photoURL ? user.photoURL : '',
+      description: userData.description ? userData.description : '',
+      photoURL: userData.photoURL ? userData.photoURL : '',
     };
 
-    return userRef.set(userData, {
-      merge: true,
-    });
+    return userRef.set(updatedUserData, { merge: true });
   }
 
   getCurrentUser() {

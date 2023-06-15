@@ -65,46 +65,52 @@ export class RecipeServiceService {
 
   async upvoteRecipe(recipeId: string, user: User) {
     const recipeRef = this.afs.doc<Recipe>(`recipes/${recipeId}`);
-    const recipe = await recipeRef.get().toPromise();
+    await this.afs.firestore.runTransaction(async (transaction) => {
+      const recipeSnapshot = await transaction.get(recipeRef.ref);
+      const recipe = recipeSnapshot.data() as Recipe;
 
-    if (recipe) {
-      const { upvotes, downvotes } = recipe.data() as Recipe;
+      if (recipe) {
+        const { upvotes, downvotes } = recipe;
 
-      if (upvotes.includes(user?.uid)) {
-        const index = upvotes.indexOf(user?.uid);
-        upvotes.splice(index, 1);
-      } else {
-        const downvoteIndex = downvotes.indexOf(user?.uid);
-        if (downvoteIndex !== -1) {
-          downvotes.splice(downvoteIndex, 1);
+        if (upvotes.includes(user?.uid)) {
+          const index = upvotes.indexOf(user?.uid);
+          upvotes.splice(index, 1);
+        } else {
+          const downvoteIndex = downvotes.indexOf(user?.uid);
+          if (downvoteIndex !== -1) {
+            downvotes.splice(downvoteIndex, 1);
+          }
+          upvotes.push(user?.uid);
         }
-        upvotes.push(user?.uid);
-      }
 
-      await recipeRef.update({ upvotes, downvotes });
-    }
+        transaction.update(recipeRef.ref, { upvotes, downvotes });
+      }
+    });
   }
 
   async downvoteRecipe(recipeId: string, user: User) {
     const recipeRef = this.afs.doc<Recipe>(`recipes/${recipeId}`);
-    const recipe = await recipeRef.get().toPromise();
+    await this.afs.firestore.runTransaction(async (transaction) => {
+      const recipeSnapshot = await transaction.get(recipeRef.ref);
+      const recipe = recipeSnapshot.data() as Recipe;
 
-    if (recipe) {
-      const { upvotes, downvotes } = recipe.data() as Recipe;
+      if (recipe) {
+        const { upvotes, downvotes } = recipe;
 
-      if (downvotes.includes(user?.uid)) {
-        const index = downvotes.indexOf(user?.uid);
-        downvotes.splice(index, 1);
-      } else {
-        const upvoteIndex = upvotes.indexOf(user?.uid);
-        if (upvoteIndex !== -1) {
-          upvotes.splice(upvoteIndex, 1);
+        if (downvotes.includes(user?.uid)) {
+          const index = downvotes.indexOf(user?.uid);
+          downvotes.splice(index, 1);
+        } else {
+          const upvoteIndex = upvotes.indexOf(user?.uid);
+          if (upvoteIndex !== -1) {
+            upvotes.splice(upvoteIndex, 1);
+          }
+          downvotes.push(user?.uid);
         }
-        downvotes.push(user?.uid);
-      }
 
-      await recipeRef.update({ upvotes, downvotes });
-    }
+        transaction.update(recipeRef.ref, { upvotes, downvotes });
+      }
+    });
   }
 
   async toggleBookmark(recipeId: string, user: User) {
@@ -125,6 +131,33 @@ export class RecipeServiceService {
       }
 
       await recipeRef.update({ bookmarkedBy: updatedBookmarkedBy });
+    }
+  }
+
+  async updateRecipesForUser(
+    userId: string,
+    updatedUser: Partial<User>
+  ): Promise<void> {
+    const userDoc = this.afs.doc<User>(`users/${userId}`);
+    const userSnapshot = await userDoc.ref.get();
+
+    if (userSnapshot.exists) {
+      const userData = userSnapshot.data() as User;
+      const batch = this.afs.firestore.batch();
+
+      const recipesRef = this.afs.collection<Recipe>('recipes', (ref) =>
+        ref.where('user.uid', '==', userId)
+      );
+
+      recipesRef.get().subscribe((recipesSnapshot) => {
+        recipesSnapshot.forEach((recipeDoc) => {
+          const recipe = recipeDoc.data() as Recipe;
+          recipe.user = { ...recipe.user, ...updatedUser, ...userData };
+          batch.update(recipeDoc.ref, recipe);
+        });
+
+        batch.commit();
+      });
     }
   }
 }

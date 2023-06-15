@@ -55,6 +55,7 @@ export class RecipeListComponent implements OnInit {
 
   signOut() {
     this.authService.signOut().then(() => {
+      localStorage.clear();
       this.snackBar.open('Signed out successfully', 'Close', {
         duration: 2000,
       });
@@ -66,7 +67,6 @@ export class RecipeListComponent implements OnInit {
     const userId = this.currentUser.uid;
     this.userService.getUser(userId).subscribe((user) => {
       this.user = user;
-      console.log(this.user);
     });
   }
 }

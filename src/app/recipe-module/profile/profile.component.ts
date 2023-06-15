@@ -7,6 +7,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
 import { RecipeServiceService } from '../recipe-service.service';
 import { CommentService } from 'src/app/services/comment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +30,7 @@ export class ProfileComponent {
     private userService: UserService,
     private recipeService: RecipeServiceService,
     private commentService: CommentService,
+    private router: Router,
     private dialog: MatDialog,
     private storage: AngularFireStorage
   ) {}
@@ -136,5 +138,9 @@ export class ProfileComponent {
         )
         .subscribe();
     }
+  }
+
+  toDetails(id: string) {
+    this.router.navigate(['recipes', id]);
   }
 }

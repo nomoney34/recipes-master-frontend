@@ -7,6 +7,8 @@ import {
 import { User } from '../shared/models/user';
 import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs';
+import { CommentService } from './comment.service';
+import { RecipeServiceService } from '../recipe-module/recipe-service.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,9 @@ export class UserService {
 
   constructor(
     private afs: AngularFirestore,
-    private authService: AuthService
+    private authService: AuthService,
+    private commentService: CommentService,
+    private recipeService: RecipeServiceService
   ) {}
 
   getUser(uid: string): Observable<User | undefined> {
@@ -27,18 +31,36 @@ export class UserService {
   changeUsername(username: string): Promise<void> {
     const user = this.authService.getCurrentUser();
     if (!user) throw new Error('User not logged in');
-    return this.afs.doc(`users/${user.uid}`).update({ username });
+    return this.afs
+      .doc(`users/${user.uid}`)
+      .update({ username })
+      .then(() => {
+        this.commentService.updateCommentsForUser(user.uid, { username });
+        this.recipeService.updateRecipesForUser(user.uid, { username });
+      });
   }
 
   changeDescription(description: string): Promise<void> {
     const user = this.authService.getCurrentUser();
     if (!user) throw new Error('User not logged in');
-    return this.afs.doc(`users/${user.uid}`).update({ description });
+    return this.afs
+      .doc(`users/${user.uid}`)
+      .update({ description })
+      .then(() => {
+        this.commentService.updateCommentsForUser(user.uid, { description });
+        this.recipeService.updateRecipesForUser(user.uid, { description });
+      });
   }
 
   changeProfileImage(photoURL: string): Promise<void> {
     const user = this.authService.getCurrentUser();
     if (!user) throw new Error('User not logged in');
-    return this.afs.doc(`users/${user.uid}`).update({ photoURL });
+    return this.afs
+      .doc(`users/${user.uid}`)
+      .update({ photoURL })
+      .then(() => {
+        this.commentService.updateCommentsForUser(user.uid, { photoURL });
+        this.recipeService.updateRecipesForUser(user.uid, { photoURL });
+      });
   }
 }
