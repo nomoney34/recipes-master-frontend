@@ -17,6 +17,7 @@ export class CardComponent implements OnInit {
   @Input() upvotes!: string[];
   @Input() downvotes!: string[];
   @Input() user!: User;
+  @Input() loggedInUser!: User;
 
   @Output() navigate = new EventEmitter<string>();
 

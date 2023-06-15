@@ -103,12 +103,26 @@ export class CreateRecipeComponent {
         user: this.user,
         bookmarkedBy: [],
       };
+
+      if (
+        !this.recipe.name ||
+        !this.recipe.description ||
+        !this.recipe.imageUrl ||
+        !this.recipe.ingredients ||
+        !this.recipe.instructions
+      ) {
+        return;
+      }
+
       this.recipeService.addRecipe(this.recipe, this.user).then(() => {
         this.snackBar.open('Recipe added successfully', 'Close', {
           duration: 2000,
         });
+        this.recipeForm.reset();
         this.router.navigate(['/recipes']);
       });
     });
+
+    this.isLoading = false;
   }
 }
