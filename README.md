@@ -28,5 +28,4 @@ The project has multiple forms including a login / register form, a create-recip
 ## Backend
 The project uses Firebase for its backend, which includes authentication, data storage, and hosting.
 
-The live demo of the application can be found at https://recipes-master-aee56.web.app
 
