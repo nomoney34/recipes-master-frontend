@@ -15,12 +15,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChangeUsernameDialogComponent } from './change-username-dialog/change-username-dialog.component';
 import { CommentComponent } from './comment/comment.component';
+import { ReplyDialogComponent } from './reply-dialog/reply-dialog.component';
 
 @NgModule({
   declarations: [
     CardComponent,
     ChangeUsernameDialogComponent,
     CommentComponent,
+    ReplyDialogComponent,
   ],
   imports: [
     CommonModule,

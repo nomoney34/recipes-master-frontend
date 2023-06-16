@@ -113,7 +113,7 @@
     <div>
       <h2>Comments</h2>
       <div *ngFor="let comment of comments">
-        <app-comment [comment]="comment"></app-comment>
+        <app-comment [comment]="comment" [user]="this.user"></app-comment>
       </div>
     </div>
 

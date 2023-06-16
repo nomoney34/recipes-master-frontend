@@ -4,13 +4,15 @@
     <p class="comment-username">{{ comment.user.username }}</p>
     <p class="comment-text">{{ comment.content }}</p>
     <div class="comment-actions">
-      <button class="comment-action">
+      <button class="comment-action" (click)="upvote(this.user.uid)">
         <mat-icon>thumb_up</mat-icon>
       </button>
-      <button class="comment-action">
+      <span class="vote-count">{{ comment.upvotes.length }}</span>
+      <button class="comment-action" (click)="downvote(this.user.uid)">
         <mat-icon>thumb_down</mat-icon>
       </button>
-      <button class="comment-action">
+      <span class="vote-count">{{ comment.downvotes.length }}</span>
+      <button class="comment-action" (click)="openReplyDialog()">
         <mat-icon>reply</mat-icon>
       </button>
     </div>

@@ -9,4 +9,5 @@ export interface Comment {
   timestamp: Date;
   upvotes: string[];
   downvotes: string[];
+  replies: string[];
 }
