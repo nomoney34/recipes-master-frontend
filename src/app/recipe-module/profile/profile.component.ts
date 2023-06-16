@@ -7,6 +7,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
 import { RecipeServiceService } from '../recipe-service.service';
 import { CommentService } from 'src/app/services/comment.service';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 @Component({
@@ -32,19 +33,28 @@ export class ProfileComponent {
     private commentService: CommentService,
     private router: Router,
     private dialog: MatDialog,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     const userId = this.currentUser.uid;
-    this.userService.getUser(userId).subscribe((user) => {
-      this.user = user;
-      this.filterUserRecipes();
-      this.filterUpvotedRecipes();
-      this.filterInteractions();
+
+    this.route.params.subscribe((params) => {
+      const username = params['username'];
+      // Retrieve user based on username
+      this.userService.getUserByUsername(username).subscribe((user) => {
+        this.user = user;
+        this.filterUserRecipes();
+        this.filterUpvotedRecipes();
+        this.filterInteractions();
+      });
     });
-    console.log(this.user);
+  }
+
+  isCurrentUser(): boolean {
+    return this.currentUser.uid === this.user?.uid;
   }
 
   filterUserRecipes() {

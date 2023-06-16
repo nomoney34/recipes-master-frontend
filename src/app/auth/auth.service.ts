@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from '../shared/models/user';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserCredential } from '@firebase/auth-types';
 
 @Injectable({
   providedIn: 'root',
@@ -33,17 +34,47 @@ export class AuthService {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        const userRef = this.afs.doc(`users/${result.user!.uid}`);
-        userRef
-          .get()
-          .toPromise()
-          .then((userDoc) => {
-            const userData = userDoc!.data();
-            this.SetUserData(userData, result.user).then(() => {
-              this.snackBar.open('Signed up successfully', 'Close', {
-                duration: 2000,
+        const user = result.user;
+        user
+          ?.sendEmailVerification()
+          .then(() => {
+            const userRef = this.afs.doc(`users/${user!.uid}`);
+            userRef
+              .get()
+              .toPromise()
+              .then((userDoc) => {
+                if (userDoc?.exists) {
+                  const userData = userDoc.data();
+                  this.SetUserData(userData, user).then(() => {
+                    this.snackBar.open(
+                      'Signed up successfully. Verification email has been sent.',
+                      'Close',
+                      {
+                        duration: 2000,
+                      }
+                    );
+                  });
+                } else {
+                  const userData = {
+                    email: user?.email,
+                    username: user?.displayName,
+                    description: '',
+                    photoURL: user?.photoURL,
+                  };
+                  this.SetUserData(userData, user).then(() => {
+                    this.snackBar.open(
+                      'Signed up successfully. Verification email has been sent.',
+                      'Close',
+                      {
+                        duration: 2000,
+                      }
+                    );
+                  });
+                }
               });
-            });
+          })
+          .catch((error) => {
+            window.alert(error.message);
           });
       })
       .catch((error) => {
@@ -119,5 +150,57 @@ export class AuthService {
 
   private extractUsernameFromEmail(email: string) {
     return email.split('@')[0];
+  }
+
+  signInWithGoogle() {
+    const provider = new auth.GoogleAuthProvider();
+    return this.signInWithPopup(provider);
+  }
+
+  // Common method to handle sign-in with a popup
+  private signInWithPopup(provider: auth.AuthProvider) {
+    return this.afAuth
+      .signInWithPopup(provider)
+      .then((result: UserCredential) => {
+        this.handleUserCredential(result);
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  }
+
+  // Common method to handle UserCredential
+  private async handleUserCredential(result: UserCredential) {
+    const user = result.user;
+    const userRef = this.afs.doc(`users/${user!.uid}`);
+
+    try {
+      const userDoc = await userRef.get().toPromise();
+
+      if (userDoc?.exists) {
+        const userData = userDoc.data();
+        this.SetUserData(userData, user);
+      } else {
+        const userData = {
+          email: user?.email,
+          username: user?.displayName,
+          description: '',
+          photoURL: user?.photoURL,
+        };
+        this.SetUserData(userData, user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.router.navigate(['recipes']).then(() => {
+          this.snackBar.open('Welcome to the world of recipes!', 'Close', {
+            duration: 2000,
+          });
+        });
+      }
+    });
   }
 }

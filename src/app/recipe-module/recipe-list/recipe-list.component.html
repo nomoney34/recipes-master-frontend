@@ -32,7 +32,7 @@
         <span matLine>Favorites</span>
       </a>
 
-      <a mat-list-item routerLink="/profile">
+      <a mat-list-item [routerLink]="['/profile', user.username]">
         <mat-icon matListIcon>person</mat-icon>
         <span matLine>Profile</span>
       </a>

@@ -1,5 +1,9 @@
 <div class="comment">
-  <img [src]="comment.user.photoURL" alt="Profile Picture" />
+  <img
+    [src]="comment.user.photoURL"
+    alt="Profile Picture"
+    (click)="goToProfile()"
+  />
   <div class="comment-content">
     <p class="comment-username">{{ comment.user.username }}</p>
     <p class="comment-text">{{ comment.content }}</p>

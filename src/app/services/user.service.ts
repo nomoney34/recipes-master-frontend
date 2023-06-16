@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { User } from '../shared/models/user';
 import { AuthService } from '../auth/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { CommentService } from './comment.service';
 import { RecipeServiceService } from '../recipe-module/recipe-service.service';
 
@@ -62,5 +62,14 @@ export class UserService {
         this.commentService.updateCommentsForUser(user.uid, { photoURL });
         this.recipeService.updateRecipesForUser(user.uid, { photoURL });
       });
+  }
+
+  getUserByUsername(username: string): Observable<User | undefined> {
+    return this.afs
+      .collection<User>('users')
+      .valueChanges()
+      .pipe(
+        map((users: User[]) => users.find((user) => user.username === username))
+      );
   }
 }
