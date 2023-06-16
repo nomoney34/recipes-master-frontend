@@ -72,4 +72,73 @@ export class CommentService {
 
     return batch.commit();
   }
+
+  async toggleUpvoteComment(commentId: string, userId: string): Promise<void> {
+    const commentRef = this.firestore.doc<Comment>(`comments/${commentId}`);
+    const commentSnapshot = await commentRef.get().toPromise();
+    const comment = commentSnapshot!.data() as Comment;
+
+    if (comment) {
+      const { upvotes, downvotes } = comment;
+
+      if (upvotes.includes(userId)) {
+        const index = upvotes.indexOf(userId);
+        upvotes.splice(index, 1);
+      } else {
+        const downvoteIndex = downvotes.indexOf(userId);
+        if (downvoteIndex !== -1) {
+          downvotes.splice(downvoteIndex, 1);
+        }
+        upvotes.push(userId);
+      }
+
+      return commentRef.update({ upvotes, downvotes });
+    }
+  }
+
+  async toggleDownvoteComment(
+    commentId: string,
+    userId: string
+  ): Promise<void> {
+    const commentRef = this.firestore.doc<Comment>(`comments/${commentId}`);
+    const commentSnapshot = await commentRef.get().toPromise();
+    const comment = commentSnapshot!.data() as Comment;
+
+    if (comment) {
+      const { upvotes, downvotes } = comment;
+
+      if (downvotes.includes(userId)) {
+        const index = downvotes.indexOf(userId);
+        downvotes.splice(index, 1);
+      } else {
+        const upvoteIndex = upvotes.indexOf(userId);
+        if (upvoteIndex !== -1) {
+          upvotes.splice(upvoteIndex, 1);
+        }
+        downvotes.push(userId);
+      }
+
+      return commentRef.update({ upvotes, downvotes });
+    }
+  }
+
+  async addReply(commentId: string, reply: Comment) {
+    const replyRef = this.commentCollection?.doc();
+    if (replyRef) {
+      const replyId = replyRef.ref.id;
+      reply.id = replyId;
+      await replyRef.set(reply);
+
+      const commentRef = this.commentCollection?.doc(commentId);
+      if (commentRef) {
+        const commentSnapshot = await commentRef.get().toPromise();
+        const comment = commentSnapshot!.data() as Comment;
+        if (comment) {
+          const { replies } = comment;
+          replies.push(replyId);
+          return commentRef.update({ replies });
+        }
+      }
+    }
+  }
 }

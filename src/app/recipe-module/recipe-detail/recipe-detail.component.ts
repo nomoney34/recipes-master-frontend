@@ -144,6 +144,7 @@ export class RecipeDetailComponent {
       timestamp: new Date(),
       upvotes: [],
       downvotes: [],
+      replies: [],
     };
 
     if (!comment.content) {
