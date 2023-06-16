@@ -18,7 +18,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'recipes/:id', component: RecipeDetailComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: 'profile/:username',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'favorites',
     component: FavoritesComponent,

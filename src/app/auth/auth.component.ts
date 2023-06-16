@@ -40,4 +40,9 @@ export class AuthComponent implements OnInit {
     this.authService.signIn(email, password);
     this.dialogRef.close();
   }
+
+  signInWithGoogle() {
+    this.authService.signInWithGoogle();
+    this.dialogRef.close();
+  }
 }

@@ -21,6 +21,7 @@ export class HomeComponent {
   ) {}
 
   ngOnInit(): void {
+    // localStorage.clear();
     this.isLoggedIn = this.authService.isLoggedIn();
   }
 

@@ -5,6 +5,8 @@ import { User } from '../models/user';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ReplyDialogComponent } from '../reply-dialog/reply-dialog.component';
+
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
@@ -16,7 +18,8 @@ export class CommentComponent {
 
   constructor(
     private commentService: CommentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   openReplyDialog() {
@@ -44,5 +47,9 @@ export class CommentComponent {
 
   downvote(userId: string) {
     this.commentService.toggleDownvoteComment(this.comment.id, userId);
+  }
+
+  goToProfile() {
+    this.router.navigate(['/profile', this.comment.user.username]);
   }
 }
