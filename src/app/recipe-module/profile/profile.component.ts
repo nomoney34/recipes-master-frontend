@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/users/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeUsernameDialogComponent } from 'src/app/shared/change-username-dialog/change-username-dialog.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
-import { RecipeServiceService } from '../recipe-service.service';
-import { CommentService } from 'src/app/services/comment.service';
+import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
+import { CommentService } from 'src/app/services/comments/comment.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -91,7 +91,7 @@ export class ProfileComponent {
 
   updateUsername(username: string) {
     this.userService
-      .changeUsername(username)
+      .updateUsername(username)
       .then(() => {
         console.log('username updated');
       })
@@ -101,7 +101,7 @@ export class ProfileComponent {
   }
 
   updateDescription(description: string) {
-    this.userService.changeDescription(description).then(() => {
+    this.userService.updateDescription(description).then(() => {
       console.log('description updated');
     });
   }
@@ -140,7 +140,7 @@ export class ProfileComponent {
         .pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe((url) => {
-              this.userService.changeProfileImage(url).then(() => {
+              this.userService.updateProfileImage(url).then(() => {
                 console.log('profile image updated');
               });
             });

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CommentService } from 'src/app/services/comment.service';
+import { CommentService } from 'src/app/services/comments/comment.service';
 import { Recipe } from '../models/recipe';
 import { Comment } from '../models/comment';
 import { User } from '../models/user';

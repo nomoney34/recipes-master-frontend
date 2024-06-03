@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe';
-import { RecipeServiceService } from '../recipe-service.service';
+import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize, Observable, tap } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Comment } from 'src/app/shared/models/comment';
-import { CommentService } from 'src/app/services/comment.service';
-import { UserService } from 'src/app/services/user.service';
+import { CommentService } from 'src/app/services/comments/comment.service';
+import { UserService } from 'src/app/services/users/user.service';
 
 @Component({
   selector: 'app-recipe-detail',

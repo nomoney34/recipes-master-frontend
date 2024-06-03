@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,12 +15,13 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { AuthService } from './auth/auth.service';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AuthComponent],
+  declarations: [AppComponent, HomeComponent, AuthComponent, RegisterComponent, LoginComponent],
   imports: [
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
     RecipeModuleModule,
     BrowserAnimationsModule,

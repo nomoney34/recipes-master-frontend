@@ -4,11 +4,11 @@ import {
   AngularFirestoreDocument,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
-import { User } from '../shared/models/user';
-import { AuthService } from '../auth/auth.service';
+import { User } from '../../shared/models/user';
+import { AuthService } from '../../auth/auth.service';
 import { Observable, map } from 'rxjs';
-import { CommentService } from './comment.service';
-import { RecipeServiceService } from '../recipe-module/recipe-service.service';
+import { CommentService } from '../comments/comment.service';
+import { RecipeServiceService } from '../recipes/recipe-service.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,40 +28,34 @@ export class UserService {
     return this.userDoc.valueChanges();
   }
 
-  changeUsername(username: string): Promise<void> {
+  async updateUsername(username: string): Promise<void> {
     const user = this.authService.getCurrentUser();
     if (!user) throw new Error('User not logged in');
-    return this.afs
+    await this.afs
       .doc(`users/${user.uid}`)
-      .update({ username })
-      .then(() => {
-        this.commentService.updateCommentsForUser(user.uid, { username });
-        this.recipeService.updateRecipesForUser(user.uid, { username });
-      });
+      .update({ username });
+    this.commentService.updateCommentsForUser(user.uid, { username });
+    this.recipeService.updateRecipesForUser(user.uid, { username });
   }
 
-  changeDescription(description: string): Promise<void> {
+  async updateDescription(description: string): Promise<void> {
     const user = this.authService.getCurrentUser();
     if (!user) throw new Error('User not logged in');
-    return this.afs
+    await this.afs
       .doc(`users/${user.uid}`)
-      .update({ description })
-      .then(() => {
-        this.commentService.updateCommentsForUser(user.uid, { description });
-        this.recipeService.updateRecipesForUser(user.uid, { description });
-      });
+      .update({ description });
+    this.commentService.updateCommentsForUser(user.uid, { description });
+    this.recipeService.updateRecipesForUser(user.uid, { description });
   }
 
-  changeProfileImage(photoURL: string): Promise<void> {
+  async updateProfileImage(photoURL: string): Promise<void> {
     const user = this.authService.getCurrentUser();
     if (!user) throw new Error('User not logged in');
-    return this.afs
+    await this.afs
       .doc(`users/${user.uid}`)
-      .update({ photoURL })
-      .then(() => {
-        this.commentService.updateCommentsForUser(user.uid, { photoURL });
-        this.recipeService.updateRecipesForUser(user.uid, { photoURL });
-      });
+      .update({ photoURL });
+    this.commentService.updateCommentsForUser(user.uid, { photoURL });
+    this.recipeService.updateRecipesForUser(user.uid, { photoURL });
   }
 
   getUserByUsername(username: string): Observable<User | undefined> {
