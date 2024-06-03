@@ -1,26 +1,38 @@
-<div class="welcome-page">
-  <h1 class="welcome-page__title">Welcome to Recipes Master!</h1>
-  <p class="welcome-page__subtitle">
-    Discover delicious recipes from around the world
-  </p>
-  <br /><br />
-  <button
-    *ngIf="!isLoggedIn"
-    class="welcome-page__button"
-    mat-raised-button
-    color="primary"
-    (click)="openLoginDialog()"
-  >
-    Login
-  </button>
-
-  <button
-    *ngIf="isLoggedIn"
-    class="welcome-page__button"
-    mat-raised-button
-    color="primary"
-    (click)="toRecipes()"
-  >
-    Explore Recipes
-  </button>
+<div class="container">
+  <div class="image-section">
+    <img src="/assets/drawkit/PNG/DrawKit-cooking-kitchen-food-vector-illustrations-02.png" alt="Cooking illustration" class="responsive-image" />
+  </div>
+  <div class="content-section">
+    <h1 class="welcome-page__title">Welcome to Recipes Master!</h1>
+    <p class="welcome-page__subtitle">
+      Discover delicious recipes from around the world
+    </p>
+    <br /><br />
+    <button
+      class="welcome-page__button welcome-page__google-button"
+      mat-raised-button
+      color="primary"
+      (click)="signInWithGoogle()"
+    >
+      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google icon" class="google-icon" />
+      Sign in with Google
+    </button>
+    <button
+      class="welcome-page__button"
+      mat-raised-button
+      color="primary"
+      (click)="openRegisterDialog()"
+    >
+      Create account
+    </button>
+    <p class="welcome-page__existing-account">Already have an account?</p>
+    <button
+      class="welcome-page__button"
+      mat-raised-button
+      color="primary"
+      (click)="openLoginDialog()"
+    >
+      Sign in
+    </button>
+  </div>
 </div>

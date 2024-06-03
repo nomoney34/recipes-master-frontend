@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/shared/models/user';
 import { Recipe } from '../../shared/models/recipe';
-import { RecipeServiceService } from '../recipe-service.service';
-import { UserService } from 'src/app/services/user.service';
+import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
+import { UserService } from 'src/app/services/users/user.service';
 
 @Component({
   selector: 'app-recipe-list',

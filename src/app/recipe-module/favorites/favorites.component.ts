@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Recipe } from 'src/app/shared/models/recipe';
-import { RecipeServiceService } from '../recipe-service.service';
-import { UserService } from 'src/app/services/user.service';
+import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
+import { UserService } from 'src/app/services/users/user.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { tap } from 'rxjs';
 

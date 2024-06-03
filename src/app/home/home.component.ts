@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthComponent } from '../auth/auth.component';
 import { AuthService } from '../auth/auth.service';
+import { LoginComponent } from '../auth/login/login.component';
+import { RegisterComponent } from '../auth/register/register.component';
 
 @Component({
   selector: 'app-home',
@@ -18,11 +20,13 @@ export class HomeComponent {
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    // localStorage.clear();
     this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.router.navigate(['recipes']);
+    }
   }
 
   toRecipes() {
@@ -34,7 +38,17 @@ export class HomeComponent {
   }
 
   openLoginDialog() {
-    this.dialog.open(AuthComponent, {
+    this.dialog.open(LoginComponent, {
+      width: '400px',
+    });
+  }
+
+  signInWithGoogle() {
+    this.authService.signInWithGoogle();
+  }
+
+  openRegisterDialog() {
+    this.dialog.open(RegisterComponent, {
       width: '400px',
     });
   }

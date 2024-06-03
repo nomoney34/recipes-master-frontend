@@ -30,91 +30,73 @@ export class AuthService {
     });
   }
 
-  signUp(email: string, password: string) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        const user = result.user;
-        user
-          ?.sendEmailVerification()
-          .then(() => {
-            const userRef = this.afs.doc(`users/${user!.uid}`);
-            userRef
-              .get()
-              .toPromise()
-              .then((userDoc) => {
-                if (userDoc?.exists) {
-                  const userData = userDoc.data();
-                  this.SetUserData(userData, user).then(() => {
-                    this.snackBar.open(
-                      'Signed up successfully. Verification email has been sent.',
-                      'Close',
-                      {
-                        duration: 2000,
-                      }
-                    );
-                  });
-                } else {
-                  const userData = {
-                    email: user?.email,
-                    username: user?.displayName,
-                    description: '',
-                    photoURL: user?.photoURL,
-                  };
-                  this.SetUserData(userData, user).then(() => {
-                    this.snackBar.open(
-                      'Signed up successfully. Verification email has been sent.',
-                      'Close',
-                      {
-                        duration: 2000,
-                      }
-                    );
-                  });
-                }
-              });
-          })
-          .catch((error) => {
-            window.alert(error.message);
-          });
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
-  }
-
-  signIn(email: string, password: string) {
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        const userRef = this.afs.doc(`users/${result.user!.uid}`);
-        userRef
-          .get()
-          .toPromise()
-          .then((userDoc) => {
-            const userData = userDoc!.data();
-            this.SetUserData(userData, result.user);
-          });
-
-        this.afAuth.authState.subscribe((user) => {
-          if (user) {
-            this.router.navigate(['recipes']).then(() => {
-              this.snackBar.open('Welcome to the world of recipes!', 'Close', {
-                duration: 2000,
-              });
+  async signUp(email: string, password: string) {
+    try {
+      const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const user = result.user;
+      user?.sendEmailVerification().then(() => {
+        const userRef = this.afs.doc(`users/${user!.uid}`);
+        userRef.get().toPromise().then((userDoc) => {
+          if (userDoc?.exists) {
+            const userData = userDoc.data();
+            this.SetUserData(userData, user).then(() => {
+              this.snackBar.open('Signed up successfully. Verification email has been sent.', 'Close', { duration: 2000 });
+            });
+          } else {
+            const userData_2 = {
+              email: user?.email,
+              username: user?.displayName,
+              description: '',
+              photoURL: user?.photoURL,
+            };
+            this.SetUserData(userData_2, user).then(() => {
+              this.snackBar.open('Signed up successfully. Verification email has been sent.', 'Close', { duration: 2000 });
             });
           }
         });
-      })
-      .catch((error) => {
-        window.alert(error.message);
+      }).catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          this.snackBar.open('The email address is already in use by another account.', 'Close', { duration: 2000 });
+        } else {
+          window.alert((error as any).message);
+        }
       });
+    } catch (error_1) {
+      window.alert((error_1 as any).message);
+    }
   }
 
-  signOut() {
-    return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['home']);
-    });
+  async signIn(email: string, password: string) {
+    try {
+      const result = await this.afAuth
+        .signInWithEmailAndPassword(email, password);
+      const userRef = this.afs.doc(`users/${result.user!.uid}`);
+      userRef
+        .get()
+        .toPromise()
+        .then((userDoc) => {
+          const userData = userDoc!.data();
+          this.SetUserData(userData, result.user);
+        });
+
+      this.afAuth.authState.subscribe((user) => {
+        if (user) {
+          this.router.navigate(['recipes']).then(() => {
+            this.snackBar.open('Welcome to the world of recipes!', 'Close', {
+              duration: 2000,
+            });
+          });
+        }
+      });
+    } catch (error) {
+      window.alert((error as any).message);
+    }
+  }
+
+  async signOut() {
+    await this.afAuth.signOut();
+    localStorage.removeItem('user');
+    this.router.navigate(['home']);
   }
 
   SetUserData(userData: any, user: any) {
@@ -158,15 +140,14 @@ export class AuthService {
   }
 
   // Common method to handle sign-in with a popup
-  private signInWithPopup(provider: auth.AuthProvider) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result: UserCredential) => {
-        this.handleUserCredential(result);
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
+  private async signInWithPopup(provider: auth.AuthProvider) {
+    try {
+      const result = await this.afAuth
+        .signInWithPopup(provider);
+      this.handleUserCredential(result);
+    } catch (error) {
+      window.alert((error as any).message);
+    }
   }
 
   // Common method to handle UserCredential

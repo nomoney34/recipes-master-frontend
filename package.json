@@ -4,7 +4,8 @@
   "description": "https://user-images.githubusercontent.com/79592589/218335953-6e7887c0-11e0-427e-b774-24dfd9b96a9d.mp4",
   "main": "karma.conf.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ng serve"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.2",
-    "@angular/cli": "^18.0.2"
+    "@angular/cli": "^18.0.2",
+    "@types/jest": "^29.5.12"
   }
 }

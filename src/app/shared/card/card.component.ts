@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../models/user';
-import { RecipeServiceService } from '../../recipe-module/recipe-service.service';
+import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
 
 @Component({
   selector: 'app-card',

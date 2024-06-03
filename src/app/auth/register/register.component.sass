@@ -1,0 +1,39 @@
+form
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding: 20px
+
+    .mat-form-field
+        width: 100%
+        margin-bottom: 20px
+
+    .mat-label
+        color: #ff5733
+
+input[type="email"],
+input[type="password"]
+    color: #ff5733
+    border-bottom: 2px solid #ff5733
+
+    .mat-error
+        color: #ff5733
+        font-size: 12px
+
+.form-actions
+    display: flex
+    justify-content: space-between
+    width: 100%
+    margin-top: 20px
+
+    button
+        width: 49%
+        background-color: #ff5733
+        color: white
+        border-radius: 4px
+        padding: 10px 20px
+        font-size: 14px
+        cursor: pointer
+        transition: all 0.2s
+        &:hover
+            background-color: #e64b00

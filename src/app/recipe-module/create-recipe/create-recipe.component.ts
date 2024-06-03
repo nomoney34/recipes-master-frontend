@@ -12,9 +12,9 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { Recipe } from 'src/app/shared/models/recipe';
 import { User } from 'src/app/shared/models/user';
-import { RecipeServiceService } from '../recipe-service.service';
+import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
 import { AuthService } from 'src/app/auth/auth.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/users/user.service';
 
 @Component({
   selector: 'app-create-recipe',

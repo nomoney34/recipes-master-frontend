@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Comment } from '../models/comment';
-import { CommentService } from 'src/app/services/comment.service';
+import { CommentService } from 'src/app/services/comments/comment.service';
 import { User } from '../models/user';
 
 import { MatDialog } from '@angular/material/dialog';
