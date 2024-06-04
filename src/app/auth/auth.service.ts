@@ -54,15 +54,9 @@ export class AuthService {
             });
           }
         });
-      }).catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
-          this.snackBar.open('The email address is already in use by another account.', 'Close', { duration: 2000 });
-        } else {
-          window.alert((error as any).message);
-        }
       });
     } catch (error_1) {
-      window.alert((error_1 as any).message);
+      this.snackBar.open('The email address is already in use by another account.', 'Close', { duration: 2000 });
     }
   }
 
@@ -146,7 +140,9 @@ export class AuthService {
         .signInWithPopup(provider);
       this.handleUserCredential(result);
     } catch (error) {
-      window.alert((error as any).message);
+      this.snackBar.open('An error occurred while signing in with Google.', 'Close', {
+        duration: 2000,
+      });
     }
   }
 
