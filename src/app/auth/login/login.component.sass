@@ -1,39 +1,52 @@
-form
-    display: flex
-    flex-direction: column
-    align-items: center
-    padding: 20px
+body, html
+  overflow-x: hidden
+  width: 100%
 
-    .mat-form-field
-        width: 100%
-        margin-bottom: 20px
+.login-form
+  display: flex
+  flex-direction: column
+  align-items: center
+  padding: 20px
+  width: 100%
+  max-width: 400px
+  margin: 0 auto
+  box-sizing: border-box
 
-    .mat-label
-        color: #ff5733
+  .mat-form-field
+    width: 100%
+    margin-bottom: 20px
 
-input[type="email"],
-input[type="password"]
+  .mat-label
+    color: #ff5733
+
+  input[type="email"],
+  input[type="password"]
     color: #ff5733
     border-bottom: 2px solid #ff5733
 
-    .mat-error
-        color: #ff5733
-        font-size: 12px
+  .mat-error
+    color: #ff5733
+    font-size: 12px
 
 .form-actions
-    display: flex
-    justify-content: space-between
-    width: 100%
-    margin-top: 20px
+  display: flex
+  justify-content: center
+  width: 100%
+  margin-top: 20px
 
-    button
-        width: 49%
-        background-color: #ff5733
-        color: white
-        border-radius: 4px
-        padding: 10px 20px
-        font-size: 14px
-        cursor: pointer
-        transition: all 0.2s
-        &:hover
-            background-color: #e64b00
+  button
+    width: 100%
+    max-width: 200px
+    background-color: #ff5733
+    color: white
+    border-radius: 4px
+    padding: 10px 20px
+    font-size: 14px
+    cursor: pointer
+    transition: all 0.2s
+    &:hover
+      background-color: #e64b00
+    &:disabled
+      background-color: #ff5733
+      opacity: 0.5
+      cursor: not-allowed

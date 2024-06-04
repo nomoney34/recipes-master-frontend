@@ -1,7 +1,7 @@
-<form [formGroup]="registerForm">
+<form [formGroup]="registerForm" class="register-form" autocomplete="off">
     <mat-form-field class="mat-form-field" appearance="outline">
         <mat-label class="mat-label">Email</mat-label>
-        <input matInput type="email" formControlName="email" required />
+        <input matInput type="email" formControlName="email" required autocomplete="new-email" />
         <mat-error class="mat-error" *ngIf="registerForm.get('email')!.hasError('required')">
             Email is required
         </mat-error>
@@ -12,17 +12,27 @@
 
     <mat-form-field class="mat-form-field" appearance="outline">
         <mat-label class="mat-label">Password</mat-label>
-        <input matInput type="password" formControlName="password" required />
+        <input matInput type="password" (input)="onPasswordInput($event)" formControlName="password" required autocomplete="new-password" />
         <mat-error class="mat-error" *ngIf="registerForm.get('password')!.hasError('required')">
             Password is required
-        </mat-error>
-        <mat-error class="mat-error" *ngIf="registerForm.get('password')!.hasError('minlength')">
-            Password must be at least 6 characters long
-        </mat-error>
+        </mat-error>  
+    </mat-form-field>
+
+    <ul class="password-requirements">
+        <li *ngFor="let req of passwordRequirements" [ngClass]="{'is-met': req.isMet}">
+          {{ req.requirement }}
+        </li>
+    </ul>
+
+    <mat-form-field class="mat-form-field" appearance="outline">
+        <mat-label class="mat-label">Confirm Password</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" required autocomplete="new-password" />
+        <mat-error class="mat-error" *ngIf="registerForm.get('confirmPassword')!.hasError('required')">
+            Confirm Password is required
+        </mat-error>    
     </mat-form-field>
 
     <div class="form-actions">
-        <button mat-button (click)="register()">Sign Up</button>
+        <button mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid">Sign Up</button>    
     </div>
-
 </form>

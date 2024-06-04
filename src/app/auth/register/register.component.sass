@@ -1,39 +1,78 @@
-form
-    display: flex
-    flex-direction: column
-    align-items: center
-    padding: 20px
+body, html
+  overflow-x: hidden
+  width: 100%
 
-    .mat-form-field
-        width: 100%
-        margin-bottom: 20px
+.register-form
+  display: flex
+  flex-direction: column
+  align-items: center
+  padding: 20px
+  width: 100%
+  max-width: 400px
+  margin: 0 auto
+  box-sizing: border-box
 
-    .mat-label
-        color: #ff5733
+  .mat-form-field
+    width: 100%
+    margin-bottom: 20px
 
-input[type="email"],
-input[type="password"]
+  .mat-label
+    color: #ff5733
+
+  input[type="email"],
+  input[type="password"]
     color: #ff5733
     border-bottom: 2px solid #ff5733
 
-    .mat-error
-        color: #ff5733
-        font-size: 12px
+  .mat-error
+    color: #ff5733
+    font-size: 12px
+
+.password-requirements
+  list-style: none
+  padding: 0
+  margin: 0 0 20px 0
+  width: 100%
+
+  li
+    margin: 5px 0
+    padding-left: 20px
+    position: relative
+
+    &::before
+      content: '\2022'
+      color: #ff5733
+      font-weight: bold
+      display: inline-block
+      width: 1em
+      margin-left: -1em
+
+    &.is-met::before
+      color: green
+
+    &.is-met
+      text-decoration: line-through
+      color: green
 
 .form-actions
-    display: flex
-    justify-content: space-between
-    width: 100%
-    margin-top: 20px
+  display: flex
+  justify-content: center
+  width: 100%
+  margin-top: 20px
 
-    button
-        width: 49%
-        background-color: #ff5733
-        color: white
-        border-radius: 4px
-        padding: 10px 20px
-        font-size: 14px
-        cursor: pointer
-        transition: all 0.2s
-        &:hover
-            background-color: #e64b00
+  button
+    width: 100%
+    max-width: 200px
+    background-color: #ff5733
+    color: white
+    border-radius: 4px
+    padding: 10px 20px
+    font-size: 14px
+    cursor: pointer
+    transition: all 0.2s
+    &:hover
+      background-color: #e64b00
+    &:disabled
+      background-color: #ff5733
+      opacity: 0.5
+      cursor: not-allowed

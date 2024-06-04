@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm">
+<form [formGroup]="loginForm" class="login-form">
     <mat-form-field class="mat-form-field" appearance="outline">
       <mat-label class="mat-label">Email</mat-label>
       <input matInput type="email" formControlName="email" required />
@@ -34,7 +34,7 @@
     </mat-form-field>
   
     <div class="form-actions">
-      <button mat-button (click)="login()">Sign In</button>
+      <button mat-raised-button color="primary" (click)="login()" [disabled]="!loginForm.valid">Sign In</button>
     </div>
   
   </form>
