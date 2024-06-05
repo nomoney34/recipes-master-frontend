@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -22,18 +17,13 @@ import { UserService } from 'src/app/services/users/user.service';
   styleUrls: ['./create-recipe.component.sass'],
 })
 export class CreateRecipeComponent {
-  onSubmit() {
-    throw new Error('Method not implemented.');
-  }
   currentUser: any;
   user: any;
-
   image?: File;
+  imagePreviewUrl: string | ArrayBuffer | null = null;
   isLoading: boolean = false;
-
   downloadURL: Observable<string> | undefined;
   recipeImageURL: string = '';
-
   recipe: Recipe | undefined;
   recipeForm!: FormGroup;
 
@@ -65,6 +55,13 @@ export class CreateRecipeComponent {
 
   onImageSelected(event: any) {
     this.image = event.target.files[0];
+    if (this.image) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result;
+      };
+      reader.readAsDataURL(this.image);
+    }
   }
 
   uploadImage() {
