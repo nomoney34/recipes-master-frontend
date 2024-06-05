@@ -1,55 +1,79 @@
 .card
-    border: 1px solid #ff6f00
-    border-radius: 5px
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3)
-    transition: all 0.3s ease-in-out
-    width: 300px
-    &:hover
-        box-shadow: 0 4px 4px #ccc
-        transform: scale(1.02)
+  border: 1px solid #ff6f00
+  border-radius: 5px
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3)
+  transition: all 0.3s ease-in-out
+  width: 300px
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  height: 100%
 
-    & img
-        object-fit: cover
-        max-height: 200px
-        cursor: pointer
+  &:hover
+    box-shadow: 0 4px 4px #ccc
+    transform: scale(1.02)
 
-.card .card-content
+  .card-header
+    height: 75px // Fixed height for title container
+    overflow: hidden // Hide overflow content
+    display: flex
+    align-items: center // Center align the title vertically
+
+  .card-title
+    width: 100%
+    text-align: left
+
+  .card-image
+    object-fit: cover
+    height: 200px
+    width: 100%
+    cursor: pointer
+
+  .card-content
     padding: 10px
+    flex-grow: 1 // Allow content to grow to fill space
 
-.card .button-list
+  .button-list
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 10px
+    .left-actions, .right-actions
+      display: flex
+      align-items: center
+
+    .left-actions
+      button, .vote-count
+        margin-right: 5px
+
+    .right-actions
+      align-items: flex-end // Align username to the bottom
+      margin-left: auto // Push username to the right
+      margin-top: 10px
+
     button
-        cursor: pointer
+      cursor: pointer
 
-.upvote-button, .downvote-button
+    .username-link
+      cursor: pointer
+      color: #ff6f00
+      text-decoration: underline
+      &:hover
+        color: #ff8c00
+
+    .vote-count
+      font-size: 14px
+      color: #888
+
+  .upvote-button, .downvote-button, .favorite-button
     background-color: transparent
     border: none
 
-.upvote-button .mat-icon,
-.downvote-button .mat-icon
-    transition: color .3s ease-in-out
+    .mat-icon
+      transition: color 0.3s ease-in-out
 
-.upvote-button:hover .mat-icon,
-.downvote-button:hover .mat-icon
-    color: #ff6f00
+    &:hover .mat-icon
+      color: #ff6f00
 
-.upvote-button:active .mat-icon,
-.downvote-button:active .mat-icon
-    color: #ff8c00
-
-.favorite-button
-    background-color: transparent
-    border: none
-
-.favorite-button .mat-icon
-    transition: color .3s ease-in-out
-
-.favorite-button:hover .mat-icon
-    color: #ff6f00
-
-.favorite-button:active .mat-icon
-    color: #ff8c00
-
-.vote-count
-    font-size: 14px
-    margin: 0 5px
-    color: #888
+    &:active .mat-icon
+      color: #ff8c00

@@ -47,6 +47,9 @@ export class CardComponent implements OnInit {
 
   bookmarkRecipe(id: string, user: User) {
     this.recipeService.toggleBookmark(id, user);
-    console.log('bookmark');
+  }
+
+  toProfile(username: string) {
+    this.navigate.emit(`/profile/${username}`);
   }
 }
