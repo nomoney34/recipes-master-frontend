@@ -168,4 +168,9 @@ export class RecipeDetailComponent {
       })
     );
   }
+
+  toProfile(username: string) {
+    this.router.navigate(['/profile', username]);
+  }
+  
 }

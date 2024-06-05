@@ -26,7 +26,7 @@
 
         <div>
           <h2>Created by</h2>
-          <p>{{ recipe.user.email }}</p>
+          <p (click)="toProfile(recipe.user.username)" class="username-link">{{ recipe.user.username }}</p>
         </div>
       </div>
       <div *ngIf="isEditable">
@@ -110,27 +110,25 @@
       </button>
     </div>
 
-    <div>
+    <div class="comment-section">
       <h2>Comments</h2>
       <div *ngFor="let comment of comments">
         <app-comment [comment]="comment" [user]="this.user"></app-comment>
       </div>
-    </div>
 
-    <!-- Add a comment form -->
-    <form [formGroup]="commentForm" (ngSubmit)="addComment()">
-      <mat-form-field class="mat-form-field">
-        <textarea
-          matInput
-          placeholder="Add a comment"
-          rows="4"
-          formControlName="content"
-        ></textarea>
-        <mat-error *ngIf="commentForm.get('content')?.hasError('required')"
-          >Comment is required</mat-error
-        >
-      </mat-form-field>
-      <button mat-button type="submit">Add Comment</button>
-    </form>
+      <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="comment-form">
+        <mat-form-field class="mat-form-field">
+          <textarea
+            matInput
+            placeholder="Add a comment"
+            rows="4"
+            formControlName="content"
+          ></textarea>
+          <mat-error *ngIf="commentForm.get('content')?.hasError('required')"
+            >Comment is required</mat-error>
+        </mat-form-field>
+        <button mat-button type="submit" class="comment-button">Add Comment</button>
+      </form>
+    </div>
   </div>
 </ng-container>

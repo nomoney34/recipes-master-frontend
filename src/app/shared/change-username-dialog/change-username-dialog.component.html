@@ -1,13 +1,21 @@
-<h2>Change Username</h2>
-<input
-  [(ngModel)]="newUsername"
-  [placeholder]="newUsername || 'Enter new username'"
-  matInput
-/>
-<textarea
-  [(ngModel)]="newDescription"
-  [placeholder]="newDescription || 'Enter new description'"
-  matInput
-></textarea>
-<button mat-raised-button color="primary" (click)="save()">Save</button>
-<button mat-button mat-dialog-close (click)="cancel()">Cancel</button>
+<div class="edit-panel">
+  <h2>Change Username</h2>
+  <mat-form-field class="form-field">
+    <input
+      [(ngModel)]="newUsername"
+      [placeholder]="newUsername || 'Enter new username'"
+      matInput
+    />
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <textarea
+      [(ngModel)]="newDescription"
+      [placeholder]="newDescription || 'Enter new description'"
+      matInput
+    ></textarea>
+  </mat-form-field>
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+    <button mat-button mat-dialog-close (click)="cancel()">Cancel</button>
+  </div>
+</div>
