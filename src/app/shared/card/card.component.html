@@ -1,51 +1,52 @@
 <mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>{{ name }}</mat-card-title>
+  <mat-card-header class="card-header">
+    <mat-card-title class="card-title">{{ name }}</mat-card-title>
   </mat-card-header>
   <img
     (click)="toDetails(id)"
     mat-card-image
-    src="{{ imageUrl }}"
-    alt="{{ name }}"
+    [src]="imageUrl"
+    [alt]="name"
+    class="card-image"
   />
   <mat-card-content class="card-content">
-    <p>
-      {{
-        description.length > 50 ? description.slice(0, 50) + "..." : description
-      }}
-    </p>
+    <p>{{ description }}</p>
   </mat-card-content>
   <mat-divider></mat-divider>
 
   <mat-card-actions class="button-list">
-    <button
-      mat-icon-button
-      class="upvote-button"
-      matTooltip="upvote"
-      (click)="upvoteRecipe(id, loggedInUser)"
-      [class.active]="isUpvoted(loggedInUser, upvotes)"
-    >
-      <mat-icon>arrow_upward</mat-icon>
-    </button>
-    <span class="vote-count">{{ upvotes.length }}</span>
-    <button
-      mat-icon-button
-      class="downvote-button"
-      matTooltip="Downvote"
-      (click)="downvoteRecipe(id, loggedInUser)"
-      [class.active]="isDownvoted(loggedInUser, downvotes)"
-    >
-      <mat-icon>arrow_downward</mat-icon>
-    </button>
-    <span class="vote-count">{{ downvotes.length }}</span>
-    <button
-      mat-icon-button
-      class="favorite-button"
-      matTooltip="Favorite"
-      (click)="bookmarkRecipe(id, loggedInUser)"
-    >
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <h3>by {{ user.username }}</h3>
+    <div class="left-actions">
+      <button
+        mat-icon-button
+        class="upvote-button"
+        matTooltip="upvote"
+        (click)="upvoteRecipe(id, loggedInUser)"
+        [class.active]="isUpvoted(loggedInUser, upvotes)"
+      >
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
+      <span class="vote-count">{{ upvotes.length }}</span>
+      <button
+        mat-icon-button
+        class="downvote-button"
+        matTooltip="Downvote"
+        (click)="downvoteRecipe(id, loggedInUser)"
+        [class.active]="isDownvoted(loggedInUser, downvotes)"
+      >
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
+      <span class="vote-count">{{ downvotes.length }}</span>
+      <button
+        mat-icon-button
+        class="favorite-button"
+        matTooltip="Favorite"
+        (click)="bookmarkRecipe(id, loggedInUser)"
+      >
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+    <div class="right-actions">
+      <h3 (click)="toProfile(user.username)" class="username-link">by {{ user.username }}</h3>
+    </div>
   </mat-card-actions>
 </mat-card>

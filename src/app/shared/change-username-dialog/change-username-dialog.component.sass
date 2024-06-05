@@ -1,0 +1,55 @@
+.edit-panel
+  background-color: #fae8d9
+  padding: 20px
+  border-radius: 8px
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+  max-width: 500px
+  margin: 0 auto
+  text-align: center
+
+  h2
+    margin-bottom: 20px
+    font-size: 24px
+    color: #333
+
+  .form-field
+    width: 100%
+    margin-bottom: 20px
+
+    textarea
+        height: 300px
+
+    input, textarea
+        font-size: 16px
+        padding: 10px
+        border: 1px solid #ccc
+        border-radius: 4px
+        box-sizing: border-box
+        width: calc(100% - 22px) // Account for padding and border
+
+  
+
+  .button-group
+    display: flex
+    justify-content: space-between
+
+  button
+    min-width: 100px
+    font-size: 16px
+    padding: 10px 20px
+
+  button[mat-raised-button]
+    background-color: #ff8c00
+    color: #fff
+
+    &:hover
+      background-color: #ff944d
+      cursor: pointer
+
+  button[mat-button]
+    color: #ff8c00
+
+    &:hover
+      background-color: rgba(255, 140, 0, 0.1)
+      cursor: pointer
+

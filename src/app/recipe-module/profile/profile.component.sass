@@ -1,64 +1,136 @@
 .profile-container
-    max-width: 600px
-    margin: 0 auto
-    padding: 20px
+  max-width: 1200px
+  margin: 0 auto
+  padding: 20px
+  background: #fae8d9
+  border-radius: 8px
 
 .profile-header
-    text-align: center
-    margin-bottom: 20px
+  text-align: center
+  margin-bottom: 20px
 
 .profile-image
-    width: 150px
-    height: 150px
-    border-radius: 50%
-    cursor: pointer
+  width: 150px
+  height: 150px
+  border-radius: 50%
+  cursor: pointer
 
 .profile-name
-    margin-top: 10px
+  margin-top: 10px
 
 .profile-description
-    margin-top: 10px
-    font-style: italic
+  margin-top: 10px
+  font-style: italic
 
 .profile-tabs
-    border: 1px solid #ccc
-    border-radius: 5px
+  border-bottom: 2px solid #ff8c00
+  margin-bottom: 20px
 
 .tab-list
-    list-style-type: none
-    margin: 0
-    padding: 0
-    display: flex
+  list-style-type: none
+  margin: 0
+  padding: 0
+  display: flex
+  justify-content: space-around
+  background: #ff8c00
+  border-radius: 8px 8px 0 0
 
 .tab-item
-    flex: 1
-    padding: 10px
-    text-align: center
-    cursor: pointer
-    background-color: #f0f0f0
-    border-bottom: 1px solid #ccc
+  flex: 1
+  padding: 10px
+  text-align: center
+  cursor: pointer
+  background-color: #ffb84d
+  border-bottom: 2px solid #ff8c00
+  transition: background-color 0.3s ease
 
-    &:hover
-        background-color: #e0e0e0
+  &:hover
+    background-color: #ff944d
 
-    &.active
-        background-color: #ccc
+  &.active
+    background-color: #ff8c00
+    font-weight: bold
 
 .tab-content
-    padding: 20px
+  padding: 20px
 
-// .recipes-tab, .interactions-tab, .yummies-tab
-//     display: none
+.recipes-tab,
+.yummies-tab
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-around
+  gap: 20px
 
-.recipes-tab.show, .interactions-tab.show, .yummies-tab.show
-    display: block
+.interactions-tab
+  display: block
 
-h3
-    margin-top: 0
+app-card
+  flex: 0 0 30%
+  margin-bottom: 20px
 
-ul
-    padding: 0
-    list-style-type: none
+.comment
+  border: 1px solid #ff8c00
+  border-radius: 8px
+  padding: 10px
+  margin-bottom: 10px
+  background-color: #fff
 
-li
-    margin-bottom: 10px
+.comment-content
+  margin-left: 10px
+
+.comment-username
+  font-weight: bold
+  color: #ff8c00
+
+.comment-actions
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.comment-action
+  background: none
+  border: none
+  cursor: pointer
+  color: #888
+
+.comment-action:hover
+  color: #ff8c00
+
+.comment p
+  margin: 0
+
+.comment img
+  cursor: pointer
+  width: 50px
+  height: 50px
+  border-radius: 50%
+
+.comment-actions
+  display: flex
+  align-items: center
+  gap: 10px
+
+.comment-action
+  background: none
+  border: none
+  cursor: pointer
+
+.vote-count
+  font-size: 14px
+  color: #888
+
+.edit-button
+  background-color: #ff8c00
+  border: none
+  color: white
+  padding: 10px 15px
+  border-radius: 5px
+  cursor: pointer
+  transition: background-color 0.3s ease, transform 0.3s ease
+  display: flex
+  align-items: center
+  gap: 5px
+
+  &:hover
+    background-color: #ff944d
+    transform: scale(1.05)
