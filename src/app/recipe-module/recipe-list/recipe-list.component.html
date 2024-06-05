@@ -1,13 +1,5 @@
 <div class="background-gradient-container" *ngIf="user">
   <mat-toolbar class="navbar">
-    <button
-      mat-icon-button
-      class="icon"
-      aria-label="Example icon-button with menu icon"
-      (click)="drawer.toggle()"
-    >
-      <mat-icon>menu</mat-icon>
-    </button>
     <img src="logo.png" alt="Recipes Master" />
     <span class="spacer"></span>
     <mat-form-field class="searchbar" appearance="fill">
@@ -21,8 +13,8 @@
     </mat-form-field>
   </mat-toolbar>
 
-  <mat-drawer-container class="drawer-container" autosize>
-    <mat-drawer #drawer class="drawer" mode="side" opened>
+  <div class="main-content">
+    <div class="side-nav">
       <a mat-list-item routerLink="/home" routerLinkActive="active">
         <mat-icon matListIcon>home</mat-icon>
         <span matLine>Home</span>
@@ -40,10 +32,9 @@
         <mat-icon matListIcon>exit_to_app</mat-icon>
         <span matLine>Sign Out</span>
       </a>
-    </mat-drawer>
+    </div>
 
-    <mat-drawer-content class="mat-drawer-content">
-      <div class="background-gradient-container"></div>
+    <div class="content">
       <div class="recipe-list-container">
         <div class="post-recipe-container">
           <button
@@ -55,8 +46,6 @@
             +
           </button>
         </div>
-
-        <h1>Welcome, {{ user.username }}</h1>
 
         <div class="recipe-list">
           <app-card
@@ -76,8 +65,8 @@
           </app-card>
         </div>
       </div>
-    </mat-drawer-content>
-  </mat-drawer-container>
+    </div>
+  </div>
 </div>
 
 <router-outlet></router-outlet>

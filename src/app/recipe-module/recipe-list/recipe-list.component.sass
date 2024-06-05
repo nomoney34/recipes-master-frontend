@@ -1,13 +1,91 @@
-// --------------- RECIPE LIST --------------- //
-.recipe-list-container
-    padding: 2rem
+.side-nav
+  width: 200px
+  display: flex
+  flex-direction: column
+  align-items: flex-start // Align items to the start (left)
+  justify-content: flex-start
+  border-right: 4px solid #FF8C00 // Thicker darker orange separation line
+  padding-top: 1rem
+  position: fixed
+  top: 80px
+  bottom: 0
+  overflow: hidden // Remove scrollbar completely
+  background: transparent // Remove background color
 
-.recipe-list-title
-    text-align: center
-    font-size: 3rem
-    color: white
-    text-shadow: 2px 2px #333
-    margin-bottom: 2rem
+  a
+    width: 100%
+    display: flex
+    align-items: center // Align items centrally
+    padding: 1rem
+    text-decoration: none
+    color: #333
+    cursor: pointer
+    justify-content: flex-start // Align text to the left within the button
+
+    &:hover
+      background-color: rgba(0, 0, 0, 0.05) // Light hover effect
+
+    &.active
+      background-color: #ddd // Highlight active item
+
+    .mat-icon
+      margin-right: 1rem // Space between icon and text
+
+// Ensure cursor pointer for SignOut button specifically
+.side-nav a:last-child
+  cursor: pointer
+
+.background-gradient-container
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background: #FFF8E1 // Consistent creme background color
+  z-index: -1
+
+.navbar
+  display: flex
+  align-items: center
+  background: linear-gradient(to right, #ff884d, #ff944d, #ffb24d, #ffbc57)
+  height: 80px
+
+  .mat-label
+    color: #000
+
+  input[type="text"]
+    color: #000
+
+    .mat-error
+      color: #ff5733
+      font-size: 12px
+
+  img
+    margin: 0 16px
+    width: 7%
+    object-fit: fill
+
+  .searchbar
+    width: 30%
+    margin-left: 16px
+    margin-top: 15px
+
+  .spacer
+    flex: 1 1 auto
+
+.main-content
+  display: flex
+  height: calc(100vh - 80px) // Full height minus navbar height
+  overflow: hidden
+
+.content
+  margin-left: 200px // Account for side-nav width
+  padding: 2rem
+  overflow-y: auto
+  height: calc(100vh - 80px) // Full height minus navbar height
+
+.recipe-list-container
+  padding: 2rem
 
 .recipe-list
   display: flex
@@ -20,110 +98,22 @@
     display: flex
     flex-direction: column
 
-
-.background-gradient-container
-    position: absolute
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    background: linear-gradient(to right, #ffa64d, #ffb74d, #ffc84d, #ffd957)
-    z-index: -1
-
 .post-recipe-container
-    display: flex
-    justify-content: center
-    margin-top: 2rem
+  display: flex
+  justify-content: center
+  margin-top: 2rem
 
 .post-button
-    width: 60px
-    height: 60px
-    border-radius: 50%
-    position: fixed
-    bottom: 20px
-    right: 20px
-    display: flex
-    align-items: center
-    justify-content: center
-    font-size: 30px
+  width: 60px
+  height: 60px
+  border-radius: 50%
+  position: fixed
+  bottom: 20px
+  right: 20px
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 30px
 
-    &:hover
-        cursor: pointer
-
-.mat-drawer-content
-    text-align: center
-
-// --------------- NAVBAR --------------- //
-.navbar
-    display: flex
-    align-items: center
-    background: linear-gradient(to right, #ff884d, #ff944d, #ffb24d, #ffbc57)
-    height: 80px
-
-    .mat-label
-        color: #000
-
-    input[type="text"]
-        color: #000
-
-        .mat-error
-            color: #ff5733
-            font-size: 12px
-
-.icon
-    background-color: transparent
-    border: none
-    &:focus
-        outline: none
-    &:hover
-        cursor: pointer
-        background-color: rgba(0, 0, 0, 0.1)
-
-img
-    margin: 0 16px
-    width: 7%
-    object-fit: fill
-
-.logo
-    height: 40px
-    margin-right: 16px
-
-.searchbar
-    width: 30%
-    margin-left: 16px
-    margin-top: 15px
-
-.spacer
-    flex: 1 1 auto
-
-// --------------- SIDENAV --------------- //
-.drawer-container
-    height: 100%
-
-.drawer
-    width: 20%
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: space-evenly
-    border: 1px solid #ccc
-    background-color: #f3f2f7
-
-.drawer
-    a
-        width: 100%
-        display: flex
-        align-items: center
-        padding: 1rem
-        text-decoration: none
-        color: #333
-
-        &:hover
-            background-color: rgba(0,0,0,0.05)
-
-        &.active
-            background-color: #333
-            color: #fff
-
-    .mat-icon
-        margin-right: 1rem
+  &:hover
+    cursor: pointer
