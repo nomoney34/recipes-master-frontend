@@ -25,6 +25,14 @@
         </div>
 
         <div>
+          <h2>Tags</h2>
+          <mat-chip-set>
+            <mat-chip-option
+            [selected]="true" [selectable]="false" *ngFor="let tag of recipe.tags">{{ tag }}</mat-chip-option>
+          </mat-chip-set>
+        </div>
+
+        <div>
           <h2>Created by</h2>
           <p (click)="toProfile(recipe.user.username)" class="username-link">{{ recipe.user.username }}</p>
         </div>
@@ -87,12 +95,43 @@
               style="height: 200px"
             ></textarea>
           </mat-form-field>
+
+          <mat-form-field class="mat-form-field" appearance="outline">
+            <mat-label class="mat-label">Tags</mat-label>
+            <mat-chip-grid class="mat-chip-grid" #chipListbox>
+              <mat-chip-option
+                *ngFor="let tag of selectedTags"
+                [selected]="true"
+                (removed)="removeTag(tag)"
+                class="mat-chip-option"
+              >
+                {{tag}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip-option>
+              <input
+                class="mat-chip-input"
+                placeholder="New tag..."
+                formControlName="tags"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipListbox"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addTag($event)"
+                #tagInput
+              />
+            </mat-chip-grid>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectTag($event, tagInput)">
+              <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                {{tag}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
         </form>
       </div>
 
       <button
         *ngIf="recipe.user.uid === currentUserId"
-        (click)="isEditable = !isEditable"
+        (click)="switchBetweenEditAndCancel()"
       >
         {{ isEditable ? "Cancel" : "Edit" }}
       </button>

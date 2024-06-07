@@ -24,6 +24,7 @@ export class RecipeServiceService {
             ...recipe,
             upvotes: recipe.upvotes || [],
             downvotes: recipe.downvotes || [],
+            tags: recipe.tags || [],
           }));
         })
       );

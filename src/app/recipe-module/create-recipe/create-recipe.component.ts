@@ -10,6 +10,7 @@ import { RecipeServiceService } from '../../services/recipes/recipe-service.serv
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { TagService } from 'src/app/services/tags/tag-service.service';
 
 @Component({
   selector: 'app-create-recipe',
@@ -28,7 +29,7 @@ export class CreateRecipeComponent {
   recipeForm!: FormGroup;
 
   filteredTags: Observable<string[]> | undefined;
-  allTags: string[] = ["chicken", "soup"];
+  allTags: string[] = [];
   selectedTags: string[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -41,7 +42,8 @@ export class CreateRecipeComponent {
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private tagService: TagService
   ) {
     
 
@@ -59,6 +61,10 @@ export class CreateRecipeComponent {
       ingredients: ['', Validators.required],
       instructions: ['', Validators.required],
       tags: ['']
+    });
+
+    this.tagService.getTags().subscribe((tags: any) => {
+      this.allTags = tags.map((tag: any) => tag.name);
     });
 
     this.filteredTags = this.recipeForm.get('tags')?.valueChanges.pipe(
@@ -114,7 +120,7 @@ export class CreateRecipeComponent {
         imageUrl: this.recipeImageURL,
         ingredients: this.recipeForm.get('ingredients')?.value,
         instructions: this.recipeForm.get('instructions')?.value,
-        tags: [],
+        tags: this.selectedTags,
         upvotes: [],
         downvotes: [],
         user: this.user,
@@ -148,7 +154,13 @@ export class CreateRecipeComponent {
     const value = event.value;
 
     if ((value || '').trim()) {
-      this.selectedTags.push(value.trim());
+      const trimmedValue = value.trim();
+      if (!this.allTags.includes(trimmedValue)) {
+        this.tagService.addTag(trimmedValue).then(() => {
+          this.allTags.push(trimmedValue);
+        });
+      }
+      this.selectedTags.push(trimmedValue);
     }
 
     if (input) {

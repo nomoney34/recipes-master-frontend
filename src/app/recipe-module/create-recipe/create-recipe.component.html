@@ -81,17 +81,19 @@
     </mat-form-field>
 
     <mat-form-field class="mat-form-field" appearance="outline">
-      <mat-label>Tags</mat-label>
-      <mat-chip-grid #chipListbox>
+      <mat-label class="mat-label">Tags</mat-label>
+      <mat-chip-grid class="mat-chip-grid" #chipListbox>
         <mat-chip-option
           *ngFor="let tag of selectedTags"
           [selected]="true"
           (removed)="removeTag(tag)"
+          class="mat-chip-option"
         >
           {{tag}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip-option>
         <input
+          class="mat-chip-input"
           placeholder="New tag..."
           formControlName="tags"
           [matAutocomplete]="auto"
