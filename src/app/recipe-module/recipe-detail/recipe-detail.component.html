@@ -26,8 +26,8 @@
 
         <div>
           <h2>Tags</h2>
-          <mat-chip-set>
-            <mat-chip-option
+          <mat-chip-set class="mat-chip-list-wrapper">
+            <mat-chip-option class="mat-chip"
             [selected]="true" [selectable]="false" *ngFor="let tag of recipe.tags">{{ tag }}</mat-chip-option>
           </mat-chip-set>
         </div>
