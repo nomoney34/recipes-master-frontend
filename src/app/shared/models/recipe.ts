@@ -11,4 +11,5 @@ export interface Recipe {
   downvotes: string[];
   user: User;
   bookmarkedBy: string[];
+  tags: string[];
 }

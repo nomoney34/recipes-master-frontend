@@ -160,4 +160,13 @@ export class RecipeServiceService {
       });
     }
   }
+
+
+  getRecipesByTag(tag: string): Observable<Recipe[]> {
+    return this.afs
+      .collection<Recipe>('recipes', ref => ref.where('tags', 'array-contains', tag))
+      .valueChanges();
+  }
+
+  
 }

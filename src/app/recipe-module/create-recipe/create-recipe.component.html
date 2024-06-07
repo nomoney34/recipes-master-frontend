@@ -77,7 +77,35 @@
         *ngIf="recipeForm.get('instructions')!.hasError('required')"
       >
         Instructions are required
-      </mat-error>
+      </mat-error>      
+    </mat-form-field>
+
+    <mat-form-field class="mat-form-field" appearance="outline">
+      <mat-label>Tags</mat-label>
+      <mat-chip-grid #chipListbox>
+        <mat-chip-option
+          *ngFor="let tag of selectedTags"
+          [selected]="true"
+          (removed)="removeTag(tag)"
+        >
+          {{tag}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip-option>
+        <input
+          placeholder="New tag..."
+          formControlName="tags"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipListbox"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="addTag($event)"
+          #tagInput
+        />
+      </mat-chip-grid>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectTag($event, tagInput)">
+        <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+          {{tag}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <div class="form-actions">
