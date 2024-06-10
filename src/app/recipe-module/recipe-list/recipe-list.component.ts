@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/models/user';
 import { Recipe } from '../../shared/models/recipe';
 import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
 import { UserService } from 'src/app/services/users/user.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,11 +14,13 @@ import { UserService } from 'src/app/services/users/user.service';
   styleUrls: ['./recipe-list.component.sass'],
 })
 export class RecipeListComponent implements OnInit {
-  recipes: Recipe[] = [];
-  searchValue: string = '';
   filteredRecipes: Recipe[] = [];
+  searchValue: string = '';
+  totalRecipes: number = 0;
   currentUser: any;
   user: any;
+  pageIndex: number = 0;
+  pageSize: number = 50;
 
   constructor(
     private recipeService: RecipeServiceService,
@@ -28,17 +31,27 @@ export class RecipeListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.recipeService.getRecipes().subscribe((recipes) => {
-      this.recipes = recipes;
-      this.filteredRecipes = recipes;
-      this.getUser();
+    this.getRecipes();
+    this.getUser();
+  }
+
+  getRecipes(): void {
+    this.recipeService.getRecipes(this.searchValue, this.pageIndex, this.pageSize).subscribe((response: any) => {
+      this.filteredRecipes = response.recipes;
+      this.totalRecipes = response.total;
     });
   }
 
-  filterRecipes() {
-    this.filteredRecipes = this.recipes.filter((recipe) =>
-      recipe.name.toLowerCase().includes(this.searchValue.toLowerCase())
-    );
+  filterRecipes(searchValue: string) {
+    this.pageIndex = 0;
+    searchValue = searchValue.trim();
+    this.getRecipes();
+  }
+
+  pageChanged(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getRecipes();
   }
 
   toCreateRecipe() {

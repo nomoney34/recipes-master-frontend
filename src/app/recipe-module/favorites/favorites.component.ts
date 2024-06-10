@@ -23,8 +23,8 @@ export class FavoritesComponent {
 
   ngOnInit(): void {
     this.getUser().subscribe(() => {
-      this.recipeService.getRecipes().subscribe((recipes) => {
-        this.favoriteRecipes = recipes.filter((recipe) =>
+      this.recipeService.getRecipes().subscribe((response) => {
+        this.favoriteRecipes = response.recipes.filter((recipe) =>
           recipe.bookmarkedBy.includes(this.user?.uid)
         );
       });
