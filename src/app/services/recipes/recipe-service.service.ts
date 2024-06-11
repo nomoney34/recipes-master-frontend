@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
-  AngularFirestoreDocument,
+  CollectionReference,
+  Query,
 } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
 import { Recipe } from '../../shared/models/recipe';
@@ -13,22 +14,26 @@ import { User } from '../../shared/models/user';
 export class RecipeServiceService {
   constructor(private afs: AngularFirestore) {}
 
-  getRecipes(): Observable<Recipe[]> {
-    return this.afs
-      .collection<Recipe>('recipes')
-      .valueChanges()
-      .pipe(
-        map((recipes) => {
-          // Initialize upvotes and downvotes arrays for each recipe
-          return recipes.map((recipe) => ({
-            ...recipe,
-            upvotes: recipe.upvotes || [],
-            downvotes: recipe.downvotes || [],
-          }));
-        })
-      );
+ 
+  getRecipes(searchValue: string = '', pageIndex: number = 0, pageSize: number = 50): Observable<{ recipes: Recipe[], total: number }> {
+    return this.afs.collection<Recipe>('recipes').valueChanges({ idField: 'id' }).pipe(
+      map((recipes) => {
+        if (searchValue) {
+          const searchValueLower = searchValue.toLowerCase();
+          recipes = recipes.filter(recipe => 
+            recipe.name.toLowerCase().includes(searchValueLower) ||
+            (recipe.tags ? recipe.tags.some(tag => tag.toLowerCase().includes(searchValueLower)) : false)
+          );
+        }
+        
+        const total = recipes.length;
+        const start = pageIndex * pageSize;
+        const end = start + pageSize;
+        return { recipes: recipes.slice(start, end), total };
+      })
+    );
   }
-
+  
   getRecipe(id: string): Observable<Recipe> {
     return this.afs
       .collection('recipes')
@@ -160,4 +165,13 @@ export class RecipeServiceService {
       });
     }
   }
+
+
+  getRecipesByTag(tag: string): Observable<Recipe[]> {
+    return this.afs
+      .collection<Recipe>('recipes', ref => ref.where('tags', 'array-contains', tag))
+      .valueChanges();
+  }
+
+  
 }

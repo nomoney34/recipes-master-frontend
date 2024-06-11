@@ -11,6 +11,13 @@
   />
   <mat-card-content class="card-content">
     <p>{{ description }}</p>
+    <div class="tags-container" *ngIf="tags && tags.length">
+      <mat-chip-set>
+        <mat-chip *ngFor="let tag of tags.slice(0, 2)" class="tag-chip">
+          {{ tag }}
+        </mat-chip>
+      </mat-chip-set>
+    </div>
   </mat-card-content>
   <mat-divider></mat-divider>
 

@@ -20,6 +20,15 @@ form
 .mat-form-field
   width: 80%
   margin-bottom: 20px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.mat-form-field-wrapper
+  display: flex
+  flex-direction: column
+  align-items: center
+  width: 100%
 
 .mat-label
   color: #ff8c00
@@ -81,3 +90,43 @@ button
 
 button:hover
   background-color: #e64b00
+
+// Styles for the tags
+.mat-chip-list-wrapper
+  display: flex
+  justify-content: center
+  width: 100%
+
+.mat-chip
+  background-color: #ff8c00 !important
+  color: white !important
+  margin: 0 5px !important
+  border-radius: 4px
+  font-size: 14px
+
+.mat-chip .mat-chip-remove
+  color: white !important
+
+.mat-chip.mat-standard-chip .mat-chip-remove
+  color: white !important
+
+.mat-chip-input
+  border-bottom: 2px solid #ff8c00 !important
+  color: #ff8c00 !important
+  margin-left: 5px
+
+input[matChipInputFor]
+  border-bottom: 2px solid #ff8c00 !important
+  color: #ff8c00 !important
+
+.mat-chip-grid
+  width: 100%
+  display: flex
+  flex-wrap: wrap
+  gap: 5px
+
+.mat-chip-option
+  background-color: #ff8c00 !important
+  color: white !important
+  border-radius: 4px
+  margin: 2px

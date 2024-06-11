@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { Recipe } from 'src/app/shared/models/recipe';
-import { User } from 'src/app/shared/models/user';
 import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from 'src/app/services/users/user.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { TagService } from 'src/app/services/tags/tag-service.service';
 
 @Component({
   selector: 'app-create-recipe',
@@ -27,6 +28,13 @@ export class CreateRecipeComponent {
   recipe: Recipe | undefined;
   recipeForm!: FormGroup;
 
+  filteredTags: Observable<string[]> | undefined;
+  allTags: string[] = [];
+  selectedTags: string[] = [];
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  @ViewChild('tagInput') tagInput!: ElementRef<HTMLInputElement>;
+
   constructor(
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
@@ -34,8 +42,16 @@ export class CreateRecipeComponent {
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private tagService: TagService
+  ) {
+    
+
+  }
+  private _filter(value: unknown): any {
+    const filterValue = (value as string)?.toLowerCase();
+    return this.allTags.filter((tag) => tag.toLowerCase().includes(filterValue));
+  }
 
   ngOnInit(): void {
     this.recipeForm = this.formBuilder.group({
@@ -44,7 +60,16 @@ export class CreateRecipeComponent {
       imagePath: ['', Validators.required],
       ingredients: ['', Validators.required],
       instructions: ['', Validators.required],
+      tags: ['']
     });
+
+    this.tagService.getTags().subscribe((tags: any) => {
+      this.allTags = tags.map((tag: any) => tag.name);
+    });
+
+    this.filteredTags = this.recipeForm.get('tags')?.valueChanges.pipe(
+      map((value) => this._filter(value))
+    );
 
     this.currentUser = this.authService.getCurrentUser();
     const userId = this.currentUser.uid;
@@ -95,6 +120,7 @@ export class CreateRecipeComponent {
         imageUrl: this.recipeImageURL,
         ingredients: this.recipeForm.get('ingredients')?.value,
         instructions: this.recipeForm.get('instructions')?.value,
+        tags: this.selectedTags,
         upvotes: [],
         downvotes: [],
         user: this.user,
@@ -121,5 +147,40 @@ export class CreateRecipeComponent {
     });
 
     this.isLoading = false;
+  }
+
+  addTag(event: any): void {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      const trimmedValue = value.trim();
+      if (!this.allTags.includes(trimmedValue)) {
+        this.tagService.addTag(trimmedValue).then(() => {
+          this.allTags.push(trimmedValue);
+        });
+      }
+      this.selectedTags.push(trimmedValue);
+    }
+
+    if (input) {
+      input.value = '';
+    }
+
+    this.recipeForm.get('tags')!.setValue(null);
+  }
+
+  removeTag(tag: string): void {
+    const index = this.selectedTags.indexOf(tag);
+
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1);
+    }
+  }
+
+  selectTag(event: any, input: HTMLInputElement): void {
+    this.selectedTags.push(event.option.viewValue);
+    input.value = '';
+    this.recipeForm.get('tags')!.setValue('');
   }
 }

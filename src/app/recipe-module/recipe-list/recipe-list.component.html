@@ -8,7 +8,7 @@
         type="text"
         matInput
         [(ngModel)]="searchValue"
-        (ngModelChange)="filterRecipes()"
+        (ngModelChange)="filterRecipes(searchValue)"
       />
     </mat-form-field>
   </mat-toolbar>
@@ -56,6 +56,7 @@
             [description]="recipe.description"
             [ingredients]="recipe.ingredients"
             [instructions]="recipe.instructions"
+            [tags]="recipe.tags"
             [upvotes]="recipe.upvotes"
             [downvotes]="recipe.downvotes"
             [user]="recipe.user"
@@ -64,6 +65,8 @@
           >
           </app-card>
         </div>
+
+        <mat-paginator class="custom-paginator" [length]="totalRecipes" [pageSize]="50" (page)="pageChanged($event)"></mat-paginator>
       </div>
     </div>
   </div>

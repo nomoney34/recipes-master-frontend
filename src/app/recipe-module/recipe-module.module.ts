@@ -7,6 +7,7 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { FavoritesComponent } from './favorites/favorites.component';
     ProfileComponent,
     FavoritesComponent,
   ],
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule, RouterModule, MatPaginatorModule],
 })
 export class RecipeModuleModule {}

@@ -1,87 +1,159 @@
 .spinner-container
-    text-align: center
+  text-align: center
 
 .loading-spinner
-    position: absolute
-    top: 50%
-    left: 50%
-    transform: translate(-50%, -50%)
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
 
 .recipe-details
-    margin: 40px auto // Center the content
-    max-width: 1200px // Set a max-width for the content
-    padding: 20px
-    background: #f6e8d6 // Lighter background color to match the main page
-    border-radius: 8px
+  margin: 40px auto // Center the content
+  max-width: 1200px // Set a max-width for the content
+  padding: 20px
+  background: #f6e8d6 // Lighter background color to match the main page
+  border-radius: 8px
 
-    h1, h2, p, img, form, button
-        margin-left: 20px
-        margin-right: 20px
+  h1, h2, p, img, form, button
+    margin-left: 20px
+    margin-right: 20px
 
-    h1
-        margin-top: 20px
-        font-size: 36px
-        text-align: center
+  h1
+    margin-top: 20px
+    font-size: 36px
+    text-align: center
 
-    h2
-        font-size: 24px
-        text-align: left
-        margin-top: 20px
+  h2
+    font-size: 24px
+    text-align: left
+    margin-top: 20px
 
-    p
-        font-size: 18px
-        text-align: left
-        margin-top: 20px
+  p
+    font-size: 18px
+    text-align: left
+    margin-top: 20px
 
-    img
-        width: 100%
-        max-width: 600px // Fixed size for the image
-        height: auto
-        display: block
-        margin: 20px auto // Center the image
-
-    form
-        margin-top: 20px
-        display: flex
-        flex-direction: column
-        align-items: center
-
-        .mat-form-field
-            width: 100%
-
-        input, textarea
-            font-size: 18px
-
-    button
-        margin-top: 20px
-        width: 200px
-        height: 50px
-        font-size: 18px
-        align-self: center // Center the buttons
-
-    .username-link
-        color: #ff6f00 // Orange color for the username
-        cursor: pointer // Pointer cursor
-        text-decoration: underline
-        &:hover
-            color: #ff8c00 // Darker orange on hover
-
-.comment-section
+  img
     width: 100%
-    max-width: 800px
-    margin: 20px auto
+    max-width: 600px // Fixed size for the image
+    height: auto
+    display: block
+    margin: 20px auto // Center the image
 
-.mat-form-field
-    width: 100%
-
-.comment-form
+  form
+    margin-top: 20px
     display: flex
     flex-direction: column
     align-items: center
 
-.comment-button
+    .mat-form-field
+      width: 100%
+
+    input, textarea
+      font-size: 18px
+
+  button
+    margin-top: 20px
     width: 200px
     height: 50px
     font-size: 18px
-    margin-top: 20px
-    align-self: center // Center the comment button
+    align-self: center // Center the buttons
+
+  .username-link
+    color: #ff6f00 // Orange color for the username
+    cursor: pointer // Pointer cursor
+    text-decoration: underline
+    &:hover
+      color: #ff8c00 // Darker orange on hover
+
+.comment-section
+  width: 100%
+  max-width: 800px
+  margin: 20px auto
+
+.mat-form-field
+  width: 100%
+
+.comment-form
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.comment-button
+  width: 200px
+  height: 50px
+  font-size: 18px
+  margin-top: 20px
+  align-self: center // Center the comment button
+
+// Styles for the tags
+.mat-chip-list-wrapper
+  display: flex
+  justify-content: center
+  width: 100%
+
+.mat-chip
+  background-color: #ff8c00 !important
+  color: white !important
+  margin: 0 5px !important
+  border-radius: 4px
+  font-size: 14px
+
+.mat-chip .mat-chip-remove
+  color: white !important
+
+.mat-chip.mat-standard-chip .mat-chip-remove
+  color: white !important
+
+.mat-chip-input
+  border-bottom: 2px solid #ff8c00 !important
+  color: #ff8c00 !important
+  margin-left: 5px
+
+input[matChipInputFor]
+  border-bottom: 2px solid #ff8c00 !important
+  color: #ff8c00 !important
+
+.mat-chip-grid
+  width: 100%
+  display: flex
+  flex-wrap: wrap
+  gap: 5px
+
+.mat-chip-option
+  background-color: #ff8c00 !important
+  color: white !important
+  border-radius: 4px
+  margin: 2px
+
+// CSS for image upload and preview
+.form-field
+  width: 80%
+  margin-bottom: 20px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.image-preview
+  width: 300px
+  height: 300px
+  object-fit: cover
+  border: 2px solid #ff8c00
+  border-radius: 8px
+  margin-bottom: 10px
+
+input[type="file"]
+  display: none
+
+.image-upload-label
+  display: inline-block
+  padding: 10px 20px
+  background-color: #ff8c00
+  color: white
+  border-radius: 4px
+  cursor: pointer
+  font-size: 14px
+  transition: background-color 0.2s
+
+.image-upload-label:hover
+  background-color: #e64b00

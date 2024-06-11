@@ -58,16 +58,16 @@ export class ProfileComponent {
   }
 
   filterUserRecipes() {
-    this.recipeService.getRecipes().subscribe((recipes) => {
-      this.userRecipes = recipes.filter(
+    this.recipeService.getRecipes().subscribe((response) => {
+      this.userRecipes = response.recipes.filter(
         (recipe) => recipe.user.uid === this.user.uid
       );
     });
   }
 
   filterUpvotedRecipes() {
-    this.recipeService.getRecipes().subscribe((recipes) => {
-      this.upvotedRecipes = recipes.filter((recipe) =>
+    this.recipeService.getRecipes().subscribe((response) => {
+      this.upvotedRecipes = response.recipes.filter((recipe) =>
         recipe.upvotes.includes(this.user.uid)
       );
     });

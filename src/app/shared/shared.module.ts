@@ -16,6 +16,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChangeUsernameDialogComponent } from './change-username-dialog/change-username-dialog.component';
 import { CommentComponent } from './comment/comment.component';
 import { ReplyDialogComponent } from './reply-dialog/reply-dialog.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { ReplyDialogComponent } from './reply-dialog/reply-dialog.component';
     MatSidenavModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   exports: [
     CommentComponent,
@@ -56,6 +60,8 @@ import { ReplyDialogComponent } from './reply-dialog/reply-dialog.component';
     MatSidenavModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
 })
 export class SharedModule {}
