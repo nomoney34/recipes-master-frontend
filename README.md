@@ -1,7 +1,7 @@
 # Recipes-Master
 
 
-https://user-images.githubusercontent.com/79592589/218335953-6e7887c0-11e0-427e-b774-24dfd9b96a9d.mp4
+
 
 
 This project is a recipe application that allows users to browse and manage their favorite recipes. It has multiple features including multiple routes, reusable components, inter-component communication, public and private routes, and multiple forms.
