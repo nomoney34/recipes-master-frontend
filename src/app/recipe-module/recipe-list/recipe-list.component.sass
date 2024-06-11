@@ -2,36 +2,35 @@
   width: 200px
   display: flex
   flex-direction: column
-  align-items: flex-start // Align items to the start (left)
+  align-items: flex-start
   justify-content: flex-start
-  border-right: 4px solid #FF8C00 // Thicker darker orange separation line
+  border-right: 4px solid #FF8C00
   padding-top: 1rem
   position: fixed
   top: 80px
   bottom: 0
-  overflow: hidden // Remove scrollbar completely
-  background: transparent // Remove background color
+  overflow: hidden
+  background: transparent
 
   a
     width: 100%
     display: flex
-    align-items: center // Align items centrally
+    align-items: center
     padding: 1rem
     text-decoration: none
     color: #333
     cursor: pointer
-    justify-content: flex-start // Align text to the left within the button
+    justify-content: flex-start
 
     &:hover
-      background-color: rgba(0, 0, 0, 0.05) // Light hover effect
+      background-color: rgba(0, 0, 0, 0.05)
 
     &.active
-      background-color: #ddd // Highlight active item
+      background-color: #ddd
 
     .mat-icon
-      margin-right: 1rem // Space between icon and text
+      margin-right: 1rem
 
-// Ensure cursor pointer for SignOut button specifically
 .side-nav a:last-child
   cursor: pointer
 
@@ -41,7 +40,7 @@
   left: 0
   width: 100%
   height: 100%
-  background: #FFF8E1 // Consistent creme background color
+  background: #FFF8E1
   z-index: -1
 
 .navbar
@@ -75,14 +74,14 @@
 
 .main-content
   display: flex
-  height: calc(100vh - 80px) // Full height minus navbar height
+  height: calc(100vh - 80px)
   overflow: hidden
 
 .content
-  margin-left: 200px // Account for side-nav width
+  margin-left: 200px
   padding: 2rem
   overflow-y: auto
-  height: calc(100vh - 80px) // Full height minus navbar height
+  height: calc(100vh - 80px)
 
 .recipe-list-container
   padding: 2rem
@@ -117,3 +116,28 @@
 
   &:hover
     cursor: pointer
+
+.custom-paginator
+  display: flex
+  justify-content: center
+  margin-top: 1rem
+  background-color: #fff8e1
+  padding: 0.5rem
+  border-radius: 5px
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1)
+
+.custom-paginator .mat-paginator-outer-container
+  display: flex
+  justify-content: center
+
+.custom-paginator .mat-paginator-page-size
+  margin: 0 1rem
+
+.custom-paginator .mat-paginator-range-label
+  margin: 0 1rem
+
+.custom-paginator .mat-paginator-icon-button
+  color: #ff8c00
+
+.custom-paginator .mat-paginator-icon-button:hover
+  background-color: rgba(255, 140, 0, 0.1)

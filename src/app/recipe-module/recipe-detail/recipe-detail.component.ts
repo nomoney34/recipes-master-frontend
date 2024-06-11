@@ -28,6 +28,7 @@ export class RecipeDetailComponent {
   user: any;
 
   image?: File;
+  imagePreviewUrl: string | ArrayBuffer | null = null;
   downloadURL: Observable<string> | undefined;
   recipeImageURL: string = '';
 
@@ -75,7 +76,10 @@ export class RecipeDetailComponent {
           tags: [recipe.tags],
         });
 
-        this.selectedTags = [...recipe.tags];
+        this.selectedTags = recipe.tags ? [...recipe.tags] : [];
+        this.imagePreviewUrl = recipe.imageUrl;
+        this.recipeImageURL = recipe.imageUrl;
+        console.log(this.imagePreviewUrl);
 
         this.tagService.getTags().subscribe((tags: any) => {
           this.allTags = tags.map((tag: any) => tag.name);
@@ -107,6 +111,13 @@ export class RecipeDetailComponent {
 
   onImageSelected(event: any) {
     this.image = event.target.files[0];
+    if (this.image) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result;
+      };
+      reader.readAsDataURL(this.image);
+    }
   }
 
   uploadImage() {
@@ -131,21 +142,31 @@ export class RecipeDetailComponent {
   }
 
   updateRecipe() {
-    this.isLoading = true;
-    this.uploadImage().then(() => {
-      this.recipe = {
-        ...this.recipe,
-        ...this.recipeForm.value,
-        imageUrl: this.recipeImageURL,
-        tags: this.selectedTags,
-      };
-      this.recipeService.updateRecipe(this.recipe.id, this.recipe).then(() => {
-        this.snackBar.open('Recipe updated', 'Close', {
-          duration: 2000,
-        });
-        this.isEditable = false;
-        this.router.navigate(['/recipes']);
+    this.isLoading = true;  
+    if (this.recipeImageURL !== this.imagePreviewUrl) {
+      this.uploadImage().then(() => {
+        this.updateRecipeData();
       });
+    } else {
+      this.updateRecipeData();
+    }
+  }
+  
+  updateRecipeData() {
+    this.recipe = {
+      ...this.recipe,
+      ...this.recipeForm.value,
+      imageUrl: this.recipeImageURL,
+      tags: this.selectedTags,
+    };
+    this.recipeService.updateRecipe(this.recipe.id, this.recipe).then(() => {
+      this.snackBar.open('Recipe updated', 'Close', {
+        duration: 2000,
+      });
+      this.isEditable = false;
+      this.router.navigate(['/recipes']);
+    }).finally(() => {
+      this.isLoading = false;
     });
   }
 
@@ -162,9 +183,8 @@ export class RecipeDetailComponent {
 
   switchBetweenEditAndCancel() {
     this.isEditable = !this.isEditable;
-    console.log(this.recipe.tags);
     if(!this.isEditable)
-      this.selectedTags = [...this.recipe.tags];
+      this.selectedTags = this.recipe.tags ? [...this.recipe.tags] : [];
   }
 
   addTag(event: any): void {

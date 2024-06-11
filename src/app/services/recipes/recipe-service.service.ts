@@ -21,7 +21,8 @@ export class RecipeServiceService {
         if (searchValue) {
           const searchValueLower = searchValue.toLowerCase();
           recipes = recipes.filter(recipe => 
-            recipe.name.toLowerCase().includes(searchValueLower)
+            recipe.name.toLowerCase().includes(searchValueLower) ||
+            (recipe.tags ? recipe.tags.some(tag => tag.toLowerCase().includes(searchValueLower)) : false)
           );
         }
         

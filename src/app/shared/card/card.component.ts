@@ -14,6 +14,7 @@ export class CardComponent implements OnInit {
   @Input() ingredients!: string;
   @Input() instructions!: string;
   @Input() imageUrl!: string;
+  @Input() tags!: string[];
   @Input() upvotes!: string[];
   @Input() downvotes!: string[];
   @Input() user!: User;

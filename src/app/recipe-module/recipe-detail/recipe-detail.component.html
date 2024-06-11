@@ -60,21 +60,24 @@
             />
           </mat-form-field>
           <div class="form-field">
-            <mat-label class="mat-label">Image</mat-label>
-            <input
-              multiple
-              type="file"
-              formControlName="imagePath"
-              required
-              (change)="onImageSelected($event)"
-            />
+            <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" alt="Image Preview" class="image-preview" />
+            <label class="image-upload-label">
+              <input
+                multiple
+                type="file"
+                formControlName="imagePath"
+                required
+                (change)="onImageSelected($event)"
+              />
+              Choose Image
+            </label>
             <mat-error
               class="mat-error"
               *ngIf="recipeForm.get('imagePath')!.hasError('required')"
             >
               Image is required
             </mat-error>
-          </div>
+          </div>          
           <mat-form-field class="mat-form-field">
             <textarea
               matInput
