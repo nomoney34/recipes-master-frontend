@@ -133,7 +133,6 @@ export class AuthService {
     return this.signInWithPopup(provider);
   }
 
-  // Common method to handle sign-in with a popup
   private async signInWithPopup(provider: auth.AuthProvider) {
     try {
       const result = await this.afAuth
@@ -146,7 +145,6 @@ export class AuthService {
     }
   }
 
-  // Common method to handle UserCredential
   private async handleUserCredential(result: UserCredential) {
     const user = result.user;
     const userRef = this.afs.doc(`users/${user!.uid}`);
