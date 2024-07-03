@@ -71,7 +71,11 @@
       <!-- Interactions Tab Content -->
       <div class="interactions-tab" *ngIf="activeTab === 'interactions'">
         <div *ngFor="let comment of comments">
-          <app-comment [comment]="comment" [user]="this.user"></app-comment>
+          <app-comment
+            [comment]="comment"
+            [user]="this.user"
+            (commentClick)="onCommentClick($event)"
+          ></app-comment>
         </div>
       </div>
 

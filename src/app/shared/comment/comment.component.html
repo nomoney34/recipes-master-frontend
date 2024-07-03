@@ -1,4 +1,4 @@
-<div class="comment">
+<div class="comment" (click)="onCommentClick()">
   <img [src]="comment.user.photoURL" alt="Profile Picture" (click)="goToProfile()" />
   <div class="comment-content">
     <p class="comment-username">{{ comment.user.username }}</p>
@@ -20,7 +20,7 @@
       </button>
     </div>
     <div *ngIf="expanded" class="replies">
-      <app-comment *ngFor="let reply of comment.replies" [comment]="reply" [user]="user"></app-comment>
+      <app-comment *ngFor="let reply of comment.replies" [comment]="reply" [user]="user" (commentClick)="commentClick.emit($event)"></app-comment>
     </div>
   </div>
 </div>

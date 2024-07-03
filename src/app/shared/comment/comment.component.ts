@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Comment } from '../models/comment';
 import { CommentService } from 'src/app/services/comments/comment.service';
 import { User } from '../models/user';
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class CommentComponent implements OnInit {
   @Input() comment!: Comment;
   @Input() user!: User;
+  @Output() commentClick = new EventEmitter<string>();
   expanded: boolean = false;
 
   constructor(
@@ -59,5 +60,9 @@ export class CommentComponent implements OnInit {
 
   toggleExpand() {
     this.expanded = !this.expanded;
+  }
+
+  onCommentClick() {
+    this.commentClick.emit(this.comment.recipe.id);
   }
 }

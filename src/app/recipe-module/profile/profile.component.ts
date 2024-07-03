@@ -7,7 +7,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
 import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
 import { CommentService } from 'src/app/services/comments/comment.service';
-import { ActivatedRoute, Router } from '@angular/router'; // Import Router
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -151,5 +151,9 @@ export class ProfileComponent {
 
   toDetails(id: string) {
     this.router.navigate(['recipes', id]);
+  }
+
+  onCommentClick(recipeId: string) {
+    this.toDetails(recipeId);
   }
 }
