@@ -9,18 +9,10 @@
     />
     <img
       class="profile-image"
-      [src]="user.photoURL || 'assets/user-profile-image.jpg'"
+      [src]="user.photoURL || 'assets/user-default-profile-picture.png'"
       alt="Profile Image"
       (click)="fileInput.click()"
     />
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="uploadProfileImage()"
-      *ngIf="selectedFile"
-    >
-      Upload
-    </button>
 
     <h2 class="profile-name">{{ user.username }}</h2>
     <p class="profile-description">
@@ -69,6 +61,7 @@
           [instructions]="recipe.instructions"
           [upvotes]="recipe.upvotes"
           [downvotes]="recipe.downvotes"
+          [bookmarkedBy]="recipe.bookmarkedBy"
           [user]="recipe.user"
           [loggedInUser]="user"
           (navigate)="toDetails($event)"
@@ -84,20 +77,21 @@
 
       <!-- Yummies Tab Content -->
       <div class="yummies-tab" *ngIf="activeTab === 'yummies'">
-          <app-card
-            *ngFor="let recipe of upvotedRecipes"
-            [id]="recipe.id"
-            [name]="recipe.name"
-            [imageUrl]="recipe.imageUrl"
-            [description]="recipe.description"
-            [ingredients]="recipe.ingredients"
-            [instructions]="recipe.instructions"
-            [upvotes]="recipe.upvotes"
-            [downvotes]="recipe.downvotes"
-            [user]="recipe.user"
-            [loggedInUser]="user"
-            (navigate)="toDetails($event)"
-          ></app-card>
+        <app-card
+          *ngFor="let recipe of upvotedRecipes"
+          [id]="recipe.id"
+          [name]="recipe.name"
+          [imageUrl]="recipe.imageUrl"
+          [description]="recipe.description"
+          [ingredients]="recipe.ingredients"
+          [instructions]="recipe.instructions"
+          [upvotes]="recipe.upvotes"
+          [downvotes]="recipe.downvotes"
+          [bookmarkedBy]="recipe.bookmarkedBy"
+          [user]="recipe.user"
+          [loggedInUser]="user"
+          (navigate)="toDetails($event)"
+        ></app-card>
       </div>
     </div>
   </div>

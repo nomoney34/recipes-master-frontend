@@ -7,8 +7,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
 import { RecipeServiceService } from '../../services/recipes/recipe-service.service';
 import { CommentService } from 'src/app/services/comments/comment.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; // Import Router
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile',
@@ -34,16 +34,15 @@ export class ProfileComponent {
     private router: Router,
     private dialog: MatDialog,
     private storage: AngularFireStorage,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
-    const userId = this.currentUser.uid;
-
+    
     this.route.params.subscribe((params) => {
       const username = params['username'];
-      // Retrieve user based on username
       this.userService.getUserByUsername(username).subscribe((user) => {
         this.user = user;
         this.filterUserRecipes();
@@ -93,16 +92,19 @@ export class ProfileComponent {
     this.userService
       .updateUsername(username)
       .then(() => {
-        console.log('username updated');
-      })
-      .catch((error) => {
-        console.log(error);
+        this.snackBar.open('Profile updated', 'Close', {
+          duration: 2000,
+        });
+        this.router.navigate(['/profile', username]);
       });
+      
   }
 
   updateDescription(description: string) {
     this.userService.updateDescription(description).then(() => {
-      console.log('description updated');
+      this.snackBar.open('Profile updated', 'Close', {
+        duration: 2000,
+      });     
     });
   }
 
@@ -125,15 +127,10 @@ export class ProfileComponent {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
-  }
-
-  uploadProfileImage() {
     if (this.selectedFile) {
-      const file = this.selectedFile;
       const filePath = `profile-images/${this.currentUser.uid}`;
       const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, file);
+      const task = this.storage.upload(filePath, this.selectedFile);
 
       task
         .snapshotChanges()
@@ -141,7 +138,9 @@ export class ProfileComponent {
           finalize(() => {
             fileRef.getDownloadURL().subscribe((url) => {
               this.userService.updateProfileImage(url).then(() => {
-                console.log('profile image updated');
+                this.snackBar.open('Profile image updated', 'Close', {
+                  duration: 2000,
+                });
               });
             });
           })

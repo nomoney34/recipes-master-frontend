@@ -19,6 +19,7 @@ export class CardComponent implements OnInit {
   @Input() downvotes!: string[];
   @Input() user!: User;
   @Input() loggedInUser!: User;
+  @Input() bookmarkedBy!: string[];
 
   @Output() navigate = new EventEmitter<string>();
 
@@ -30,12 +31,12 @@ export class CardComponent implements OnInit {
     this.navigate.emit(id);
   }
 
-  upvoteRecipe(id: string, user: User) {
-    this.recipeService.upvoteRecipe(id, user);
+  async upvoteRecipe(id: string, user: User) {
+    await this.recipeService.upvoteRecipe(id, user);
   }
 
-  downvoteRecipe(id: string, user: User) {
-    this.recipeService.downvoteRecipe(id, user);
+  async downvoteRecipe(id: string, user: User) {
+    await this.recipeService.downvoteRecipe(id, user);
   }
 
   isUpvoted(user: User, upvotes: string[]): boolean {
@@ -46,8 +47,12 @@ export class CardComponent implements OnInit {
     return downvotes.includes(user.uid);
   }
 
-  bookmarkRecipe(id: string, user: User) {
-    this.recipeService.toggleBookmark(id, user);
+  async bookmarkRecipe(id: string, user: User) {
+    await this.recipeService.toggleBookmark(id, user);
+  }
+
+  isBookmarked(user: User, bookmarkedBy: string[]): boolean {
+    return bookmarkedBy.includes(user.uid);
   }
 
   toProfile(username: string) {

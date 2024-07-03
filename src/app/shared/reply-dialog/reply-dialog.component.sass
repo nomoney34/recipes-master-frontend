@@ -1,0 +1,60 @@
+:host
+  display: block
+  padding: 24px
+
+.mat-dialog-title
+  color: #ff6f00
+  font-weight: bold
+  font-size: 24px
+  margin-bottom: 16px
+
+.mat-dialog-content
+  display: flex
+  flex-direction: column
+
+.mat-form-field
+  width: 100%
+
+  &.full-width
+    width: 100%
+
+  textarea
+    resize: none
+    border-radius: 8px
+    padding: 12px
+    border: 1px solid #ccc
+    transition: border-color 0.3s
+
+    &:focus
+      border-color: #ff6f00
+      outline: none
+
+.mat-dialog-actions
+  margin-top: 16px
+
+  button
+    margin-left: 8px
+
+button
+  &.mat-button
+    color: #ff6f00
+    border: 1px solid #ff6f00
+    border-radius: 4px
+    padding: 4px 12px
+    font-weight: bold
+    transition: background-color 0.3s, color 0.3s
+
+    &:hover
+      background-color: #ff6f00
+      color: white
+
+  &.mat-raised-button
+    color: white
+    background-color: #ff6f00e8
+    border-radius: 4px
+    padding: 8px 16px
+    font-weight: bold
+    transition: background-color 0.3s
+
+    &:hover
+      background-color: #ff8c00

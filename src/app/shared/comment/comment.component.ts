@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Comment } from '../models/comment';
 import { CommentService } from 'src/app/services/comments/comment.service';
 import { User } from '../models/user';
@@ -7,20 +7,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReplyDialogComponent } from '../reply-dialog/reply-dialog.component';
 
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.sass'],
 })
-export class CommentComponent {
+export class CommentComponent implements OnInit {
   @Input() comment!: Comment;
   @Input() user!: User;
+  expanded: boolean = false;
 
   constructor(
     private commentService: CommentService,
     private dialog: MatDialog,
     private router: Router
   ) {}
+
+  ngOnInit(): void {}
 
   openReplyDialog() {
     const dialogRef = this.dialog.open(ReplyDialogComponent, {
@@ -51,5 +55,9 @@ export class CommentComponent {
 
   goToProfile() {
     this.router.navigate(['/profile', this.comment.user.username]);
+  }
+
+  toggleExpand() {
+    this.expanded = !this.expanded;
   }
 }

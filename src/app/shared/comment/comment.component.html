@@ -1,9 +1,5 @@
 <div class="comment">
-  <img
-    [src]="comment.user.photoURL"
-    alt="Profile Picture"
-    (click)="goToProfile()"
-  />
+  <img [src]="comment.user.photoURL" alt="Profile Picture" (click)="goToProfile()" />
   <div class="comment-content">
     <p class="comment-username">{{ comment.user.username }}</p>
     <p class="comment-text">{{ comment.content }}</p>
@@ -19,6 +15,12 @@
       <button class="comment-action" (click)="openReplyDialog()">
         <mat-icon>reply</mat-icon>
       </button>
+      <button *ngIf="comment.replies.length > 0" class="comment-action" (click)="toggleExpand()">
+        <mat-icon>{{ expanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="expanded" class="replies">
+      <app-comment *ngFor="let reply of comment.replies" [comment]="reply" [user]="user"></app-comment>
     </div>
   </div>
 </div>

@@ -234,6 +234,7 @@ export class RecipeDetailComponent {
       upvotes: [],
       downvotes: [],
       replies: [],
+      parrentCommentId: '',
     };
 
     if (!comment.content) {

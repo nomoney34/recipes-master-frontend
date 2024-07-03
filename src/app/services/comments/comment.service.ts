@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Observable, firstValueFrom } from 'rxjs';
 import { Comment } from '../../shared/models/comment';
 import { User } from '../../shared/models/user';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +18,7 @@ export class CommentService {
     return this.firestore
       .collection<Comment>('comments', (ref) =>
         ref.where('recipe.id', '==', recipeId)
+          .where('parrentCommentId', '==', '')
       )
       .valueChanges();
   }
@@ -57,12 +54,13 @@ export class CommentService {
     updatedUser: Partial<User>
   ): Promise<void> {
     console.log('updating comments for user');
-    const querySnapshot = await firstValueFrom(this.firestore
-      .collection<Comment>('comments', (ref) =>
-        ref.where('user.uid', '==', userId)
-      )
-      .get());
-
+    const querySnapshot = await firstValueFrom(
+      this.firestore
+        .collection<Comment>('comments', (ref) =>
+          ref.where('user.uid', '==', userId)
+        )
+        .get()
+    );
 
     const batch = this.firestore.firestore.batch();
     querySnapshot!.docs.forEach((doc) => {
@@ -97,10 +95,7 @@ export class CommentService {
     }
   }
 
-  async toggleDownvoteComment(
-    commentId: string,
-    userId: string
-  ): Promise<void> {
+  async toggleDownvoteComment(commentId: string, userId: string): Promise<void> {
     const commentRef = this.firestore.doc<Comment>(`comments/${commentId}`);
     const commentSnapshot = await firstValueFrom(commentRef.get());
     const comment = commentSnapshot!.data() as Comment;
@@ -123,7 +118,7 @@ export class CommentService {
     }
   }
 
-  async addReply(commentId: string, reply: Comment) {
+  async addReply(commentId: string, reply: Comment): Promise<void> {
     const replyRef = this.commentCollection?.doc();
     if (replyRef) {
       const replyId = replyRef.ref.id;
@@ -136,7 +131,7 @@ export class CommentService {
         const comment = commentSnapshot!.data() as Comment;
         if (comment) {
           const { replies } = comment;
-          replies.push(replyId);
+          replies.push(reply);
           return commentRef.update({ replies });
         }
       }

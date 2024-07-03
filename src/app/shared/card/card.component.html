@@ -28,7 +28,7 @@
         class="upvote-button"
         matTooltip="upvote"
         (click)="upvoteRecipe(id, loggedInUser)"
-        [class.active]="isUpvoted(loggedInUser, upvotes)"
+        [ngClass]="{'active': isUpvoted(loggedInUser, upvotes)}"
       >
         <mat-icon>arrow_upward</mat-icon>
       </button>
@@ -38,7 +38,7 @@
         class="downvote-button"
         matTooltip="Downvote"
         (click)="downvoteRecipe(id, loggedInUser)"
-        [class.active]="isDownvoted(loggedInUser, downvotes)"
+        [ngClass]="{'active': isDownvoted(loggedInUser, downvotes)}"
       >
         <mat-icon>arrow_downward</mat-icon>
       </button>
@@ -48,6 +48,7 @@
         class="favorite-button"
         matTooltip="Favorite"
         (click)="bookmarkRecipe(id, loggedInUser)"
+        [ngClass]="{'active': isBookmarked(loggedInUser, bookmarkedBy)}"
       >
         <mat-icon>favorite</mat-icon>
       </button>
